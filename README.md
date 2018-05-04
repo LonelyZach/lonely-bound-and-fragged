@@ -1,4 +1,4 @@
-# lonely-bound-and-fragged
+# Lonely, Bound and Fragged
 
 COUNTDOWN: 62 DAYS
 
