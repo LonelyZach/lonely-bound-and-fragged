@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerBehaviour : MonoBehaviour {
+public class PlayerBehaviour : NetworkBehaviour {
 
-  public float MoveSpeed = 100.0f;
+  public bool MoveWithWasd = false;
+  public bool MoveWitArrowKeys = false;
 
 	// Use this for initialization
 	void Start () {
@@ -13,21 +15,31 @@ public class PlayerBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    if (Input.GetKey(KeyCode.W))
+    var directions = new List<Direction>();
+
+    if ((MoveWithWasd && Input.GetKey(KeyCode.W)) || (MoveWitArrowKeys && Input.GetKey(KeyCode.UpArrow)))
     {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, MoveSpeed * Time.deltaTime), ForceMode2D.Force);
+      directions.Add(Direction.Up);
     }
-    if (Input.GetKey(KeyCode.A))
+    if ((MoveWithWasd && Input.GetKey(KeyCode.A)) || (MoveWitArrowKeys && Input.GetKey(KeyCode.LeftArrow)))
     {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-MoveSpeed * Time.deltaTime, 0), ForceMode2D.Force);
+      directions.Add(Direction.Left);
     }
-    if (Input.GetKey(KeyCode.S))
+    if ((MoveWithWasd && Input.GetKey(KeyCode.S)) || (MoveWitArrowKeys && Input.GetKey(KeyCode.DownArrow)))
     {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -MoveSpeed * Time.deltaTime), ForceMode2D.Force);
+      directions.Add(Direction.Down);
     }
-    if (Input.GetKey(KeyCode.D))
+    if ((MoveWithWasd && Input.GetKey(KeyCode.D)) || (MoveWitArrowKeys && Input.GetKey(KeyCode.RightArrow)))
     {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(MoveSpeed * Time.deltaTime, 0), ForceMode2D.Force);
+      directions.Add(Direction.Right);
     }
+
+    Cmd_SetPlayerDrivenMovement(directions);
+  }
+
+  // [Command] - enable for netwokring
+  void Cmd_SetPlayerDrivenMovement(List<Direction> directions)
+  {
+    gameObject.GetComponent<AvatarBehaviour>().SetPlayerDrivenMovement(directions);
   }
 }
