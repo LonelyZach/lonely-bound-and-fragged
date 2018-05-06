@@ -12,16 +12,16 @@ public class AvatarBehaviour : MonoBehaviour {
 
   private void Update()
   {
-    if (!_dead)
-    {
-      AddPlaterDrivenMovementForce();
-    }
+    AddPlaterDrivenMovementForce();
   }
 
   // Update is called once per frame
   public void SetPlayerDrivenMovement(List<Direction> directions)
   {
-    _playerDrivenMovement = directions;
+    if (!_dead)
+    {
+      _playerDrivenMovement = directions;
+    }
   }
 
   private void AddPlaterDrivenMovementForce()
@@ -47,6 +47,7 @@ public class AvatarBehaviour : MonoBehaviour {
   public void Kill()
   {
     _dead = true;
+    _playerDrivenMovement = new List<Direction>();
     gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
   }
 
