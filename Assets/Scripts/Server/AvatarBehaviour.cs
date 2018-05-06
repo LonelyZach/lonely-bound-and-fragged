@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AvatarBehaviour : MonoBehaviour {
 
+  private bool _dead = false;
+
   public float MoveSpeed = 100.0f;
 
   private List<Direction> _playerDrivenMovement = new List<Direction>();
 
   private void Update()
   {
-    AddPlaterDrivenMovementForce();
+    if (!_dead)
+    {
+      AddPlaterDrivenMovementForce();
+    }
   }
 
   // Update is called once per frame
@@ -37,6 +42,12 @@ public class AvatarBehaviour : MonoBehaviour {
     {
       gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(MoveSpeed * Time.deltaTime, 0), ForceMode2D.Force);
     }
+  }
+
+  public void Kill()
+  {
+    _dead = true;
+    gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
   }
 
   public IEnumerable<Direction> GetPlayerDirvenMovementWithOpposingDirectionsIncluded()

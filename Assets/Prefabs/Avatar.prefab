@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 114290621271183312}
   - component: {fileID: 50824449143604172}
   - component: {fileID: 114953968505677706}
-  - component: {fileID: 231292550900699538}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -3636,22 +3635,3 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!231 &231292550900699538
-SpringJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1549802034697122}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 1
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 3
-  m_DampingRatio: 0
-  m_Frequency: 1
