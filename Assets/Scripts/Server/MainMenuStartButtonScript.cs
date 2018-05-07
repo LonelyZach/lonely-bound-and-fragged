@@ -10,8 +10,12 @@ public class MainMenuStartButtonScript : MonoBehaviour {
 	void Start () {
     var button = this.GetComponent<Button>();
     button.onClick.AddListener(TaskOnClick);
+
   }
 	
+  /// <summary>
+  /// Execute the scene change
+  /// </summary>
   void TaskOnClick()
   {
     Debug.Log("Clicked Start Button!");

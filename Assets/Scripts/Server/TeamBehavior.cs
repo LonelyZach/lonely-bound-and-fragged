@@ -21,6 +21,15 @@ public class TeamBehavior : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    if(!Avatar0.GetComponent<AvatarBehaviour>().IsAlive() && !Avatar1.GetComponent<AvatarBehaviour>().IsAlive())
+    {
+      isTeamAlive = false;
+    }
 
+  }
+
+  public bool IsTeamAlive()
+  {
+    return isTeamAlive;
   }
 }

@@ -24,6 +24,11 @@ public class AvatarBehaviour : MonoBehaviour {
     }
   }
 
+  public bool IsAlive()
+  {
+    return !_dead;
+  }
+
   private void AddPlaterDrivenMovementForce()
   {
     if (_playerDrivenMovement.Contains(Direction.Up))
