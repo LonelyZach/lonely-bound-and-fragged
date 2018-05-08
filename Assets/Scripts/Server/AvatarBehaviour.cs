@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class AvatarBehaviour : MonoBehaviour {
 
-  private bool _dead = false;
+  private bool _alive = true;
 
   public float MoveSpeed = 100.0f;
 
   private List<Direction> _playerDrivenMovement = new List<Direction>();
+
+  public bool IsAlive { get { return _alive; } }
 
   private void Update()
   {
@@ -18,15 +20,10 @@ public class AvatarBehaviour : MonoBehaviour {
   // Update is called once per frame
   public void SetPlayerDrivenMovement(List<Direction> directions)
   {
-    if (!_dead)
+    if (_alive)
     {
       _playerDrivenMovement = directions;
     }
-  }
-
-  public bool IsAlive()
-  {
-    return !_dead;
   }
 
   private void AddPlaterDrivenMovementForce()
@@ -51,7 +48,7 @@ public class AvatarBehaviour : MonoBehaviour {
 
   public void Kill()
   {
-    _dead = true;
+    _alive = false;
     _playerDrivenMovement = new List<Direction>();
     gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
   }

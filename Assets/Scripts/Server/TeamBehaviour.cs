@@ -11,6 +11,8 @@ public class TeamBehaviour : MonoBehaviour
 
   private bool isTeamAlive = true;
 
+  public bool IsTeamAlive { get { return isTeamAlive; } }
+
   // Use this for initialization
   void Start()
   {
@@ -31,14 +33,9 @@ public class TeamBehaviour : MonoBehaviour
     //Update status of the avatar being alive or dead.
     //This can probably be updated with something more elegant like a listener system
     //if we decide we need it.
-    if(!avatar0Behavior.IsAlive() && !avatar1Behavior.IsAlive())
+    if (!avatar0Behavior.IsAlive && !avatar1Behavior.IsAlive)
     {
       isTeamAlive = false;
     }
-  }
-
-  public bool IsTeamAlive()
-  {
-    return isTeamAlive;
   }
 }

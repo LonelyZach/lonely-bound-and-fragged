@@ -25,7 +25,7 @@ public class GameMasterBehaviour : MonoBehaviour
     int livingTeamCount = 0;
     foreach (var teamBehavior in _teamBehaviorList)
     {
-      if (teamBehavior.IsTeamAlive())
+      if (teamBehavior.IsTeamAlive)
       {
         livingTeamCount++;
       }
