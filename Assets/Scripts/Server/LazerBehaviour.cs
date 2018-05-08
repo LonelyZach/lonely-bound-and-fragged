@@ -8,13 +8,11 @@ public class LazerBehaviour : MonoBehaviour {
   public int SpringDistance = 3;
   public int SpringFrequency = 1;
 
-  public GameObject Avatar0;
-  public GameObject Avatar1;
+  private GameObject _avatar0;
+  private GameObject _avatar1;
 
 	// Use this for initialization
 	void Start () {
-    // Spring joints need to be on one of the objects being joined, so, we'll creat it programatically.
-    CreateSpringJoint();
 
   }
 	
@@ -24,10 +22,24 @@ public class LazerBehaviour : MonoBehaviour {
     Draw();
   }
 
+  /// <summary>
+  /// Sets the two avatars to be tethered together by this laser
+  /// </summary>
+  /// <param name="avatar0"></param>
+  /// <param name="avatar1"></param>
+  public void Tether(GameObject avatar0, GameObject avatar1)
+  {
+    _avatar0 = avatar0;
+    _avatar1 = avatar1;
+
+    // Spring joints need to be on one of the objects being joined, so, we'll create it here.
+    CreateSpringJoint();
+  }
+
   private void CreateSpringJoint()
   {
-    var springJoint = Avatar0.AddComponent<SpringJoint2D>();
-    springJoint.connectedBody = Avatar1.gameObject.GetComponent<Rigidbody2D>();
+    var springJoint = _avatar0.AddComponent<SpringJoint2D>();
+    springJoint.connectedBody = _avatar1.gameObject.GetComponent<Rigidbody2D>();
     springJoint.autoConfigureDistance = false;
     springJoint.autoConfigureConnectedAnchor = false;
     springJoint.enableCollision = true;
@@ -38,8 +50,8 @@ public class LazerBehaviour : MonoBehaviour {
   private void Draw()
   {
     var renderer = gameObject.GetComponent<LineRenderer>();
-    renderer.SetPosition(0, Avatar0.gameObject.transform.position);
-    renderer.SetPosition(1, Avatar1.gameObject.transform.position);
+    renderer.SetPosition(0, _avatar0.gameObject.transform.position);
+    renderer.SetPosition(1, _avatar1.gameObject.transform.position);
   }
 
   private void KillAvatarsInLazer()
@@ -52,9 +64,9 @@ public class LazerBehaviour : MonoBehaviour {
 
   private IEnumerable<AvatarBehaviour> FindAvatarsInLazer()
   {
-    return Physics2D.LinecastAll(Avatar0.transform.position, Avatar1.transform.position)
+    return Physics2D.LinecastAll(_avatar0.transform.position, _avatar1.transform.position)
       .Select(x => x.collider.gameObject)
-      .Where(x => x != Avatar0 && x != Avatar1)
+      .Where(x => x != _avatar0 && x != _avatar1)
       .Select(x => x.GetComponent<AvatarBehaviour>())
       .Where(x => x != null);
   }
