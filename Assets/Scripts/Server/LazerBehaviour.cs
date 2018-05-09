@@ -50,8 +50,8 @@ public class LazerBehaviour : MonoBehaviour {
   private void Draw()
   {
     var renderer = gameObject.GetComponent<LineRenderer>();
-    renderer.SetPosition(0, _avatar0.gameObject.transform.position);
-    renderer.SetPosition(1, _avatar1.gameObject.transform.position);
+    renderer.SetPosition(0, new Vector3(_avatar0.gameObject.transform.position.x, _avatar0.gameObject.transform.position.y, -1));
+    renderer.SetPosition(1, new Vector3(_avatar1.gameObject.transform.position.x, _avatar1.gameObject.transform.position.y, -1));
   }
 
   private void KillAvatarsInLazer()
