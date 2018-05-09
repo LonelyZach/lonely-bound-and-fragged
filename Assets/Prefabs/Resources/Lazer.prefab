@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b10803c9d37e94a8700b89ce3ae8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Avatar0: {fileID: 0}
-  Avatar1: {fileID: 0}
+  SpringDistance: 3
+  SpringFrequency: 1
 --- !u!120 &120251887847140702
 LineRenderer:
   m_ObjectHideFlags: 1
