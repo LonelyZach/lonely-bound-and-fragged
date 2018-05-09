@@ -686,28 +686,23 @@ Prefab:
       propertyPath: m_Name
       value: KeyboardPlayer (ArrowKeys)
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Up
       value: 273
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Down
       value: 274
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Left
       value: 276
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Right
       value: 275
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: AvatarToControl
       value: 
       objectReference: {fileID: 580966937}
@@ -719,10 +714,36 @@ Prefab:
     - target: {fileID: 114347983383715332, guid: a870b886527c5f0409ef0cf99abb850f,
         type: 2}
       propertyPath: m_ServerOnly
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Up
+      value: 273
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Down
+      value: 274
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Left
+      value: 276
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Right
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: AvatarToControl
+      value: 
+      objectReference: {fileID: 580966937}
     m_RemovedComponents:
     - {fileID: 114020685958375888, guid: a870b886527c5f0409ef0cf99abb850f, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: a870b886527c5f0409ef0cf99abb850f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1260056464 stripped
@@ -874,28 +895,23 @@ Prefab:
       propertyPath: m_Name
       value: KeyboardPlayer (WASD)
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Up
       value: 119
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Down
       value: 115
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Left
       value: 97
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Right
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 114153081776175022, guid: a870b886527c5f0409ef0cf99abb850f,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: AvatarToControl
       value: 
       objectReference: {fileID: 2122671095}
@@ -907,10 +923,36 @@ Prefab:
     - target: {fileID: 114347983383715332, guid: a870b886527c5f0409ef0cf99abb850f,
         type: 2}
       propertyPath: m_ServerOnly
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Up
+      value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Down
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Left
+      value: 97
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: Right
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103011109156162, guid: a870b886527c5f0409ef0cf99abb850f,
+        type: 2}
+      propertyPath: AvatarToControl
+      value: 
+      objectReference: {fileID: 2122671095}
     m_RemovedComponents:
     - {fileID: 114020685958375888, guid: a870b886527c5f0409ef0cf99abb850f, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: a870b886527c5f0409ef0cf99abb850f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2092203927 stripped

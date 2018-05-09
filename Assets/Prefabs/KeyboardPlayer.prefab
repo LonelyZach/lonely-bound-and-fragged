@@ -19,8 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4880603356097220}
-  - component: {fileID: 114347983383715332}
-  - component: {fileID: 114153081776175022}
+  - component: {fileID: 114103011109156162}
   m_Layer: 0
   m_Name: KeyboardPlayer
   m_TagString: Untagged
@@ -41,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114153081776175022
+--- !u!114 &114103011109156162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,43 +48,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1866894628877294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b9d280822c03aa45aeacd70112c28c3, type: 3}
+  m_Script: {fileID: 11500000, guid: bcb014a81b8a5934d9082f2ae9f9283f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AvatarToControl: {fileID: 0}
   Up: 0
   Down: 0
   Left: 0
   Right: 0
---- !u!114 &114347983383715332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1866894628877294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 168
-    i1: 112
-    i2: 184
-    i3: 134
-    i4: 82
-    i5: 124
-    i6: 95
-    i7: 4
-    i8: 9
-    i9: 239
-    i10: 12
-    i11: 249
-    i12: 154
-    i13: 187
-    i14: 133
-    i15: 15
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  AvatarToControl: {fileID: 0}

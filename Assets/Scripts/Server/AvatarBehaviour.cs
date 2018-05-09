@@ -30,7 +30,7 @@ public class AvatarBehaviour : MonoBehaviour {
   private void AddPlayerDrivenMovementForce()
   {
     //Precondition is that our prime variable is a number and valid angle
-    if(float.IsNaN(_playerDrivenMovement) || _playerDrivenMovement >= 0.0f || _playerDrivenMovement <= 360.0f)
+    if(float.IsNaN(_playerDrivenMovement) || _playerDrivenMovement < 0.0f || _playerDrivenMovement > 360.0f)
     {
       return;
     }

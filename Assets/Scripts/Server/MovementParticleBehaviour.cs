@@ -17,7 +17,11 @@ public class MovementParticleBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
   {
-    var movementDirection = _avatarBehaviour.PlayerForceAngle;
+    var movementDirection = _avatarBehaviour.PlayerForceAngle + 90.0f;
+    if(movementDirection > 360.0f)
+    {
+      movementDirection -= 360.0f;
+    }
 
     if(!float.IsNaN(movementDirection))
     {
