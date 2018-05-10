@@ -14,9 +14,10 @@ public class PlayerBehaviourBase : MonoBehaviour {
     _associatedAvatarBehaviour = AvatarToControl.GetComponent<AvatarBehaviour>();
   }
 
-  // [Command] - enable for netwokring
-  protected void Cmd_SetPlayerDrivenMovement(float angleOfForce)
+  // [Command] - enable for networking
+  protected void Cmd_SetPlayerDrivenMovement(float angleOfForce, float intensity = 1.0f)
   {
-    _associatedAvatarBehaviour.SetPlayerDrivenMovement(angleOfForce);
+    intensity = Mathf.Clamp(intensity, 0.0f, 1.0f);
+    _associatedAvatarBehaviour.SetPlayerDrivenMovement(angleOfForce, intensity);
   }
 }

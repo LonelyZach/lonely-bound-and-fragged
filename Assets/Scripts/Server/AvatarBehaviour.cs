@@ -9,6 +9,7 @@ public class AvatarBehaviour : MonoBehaviour {
   public float MoveSpeed = 100.0f;
 
   private float _playerDrivenMovement = float.NaN;
+  private float _playerDrivenIntensity = 0.0f;
 
   public bool IsAlive { get { return _alive; } }
   public float PlayerForceAngle { get { return _playerDrivenMovement; } }
@@ -19,11 +20,12 @@ public class AvatarBehaviour : MonoBehaviour {
   }
 
   // Update is called once per frame
-  public void SetPlayerDrivenMovement(float angleOfForce)
+  public void SetPlayerDrivenMovement(float angleOfForce, float intensity)
   {
     if (_alive)
     {
       _playerDrivenMovement = angleOfForce;
+      _playerDrivenIntensity = intensity;
     }
   }
 
@@ -37,7 +39,7 @@ public class AvatarBehaviour : MonoBehaviour {
 
     //If preconditions met, make some calculations!
     float radAngle = Mathf.Deg2Rad * _playerDrivenMovement;
-    float forceMagnitude = MoveSpeed * Time.deltaTime;
+    float forceMagnitude = MoveSpeed * Time.deltaTime * _playerDrivenIntensity;
 
     //Determine the angle with simple trig
     var forceVector = new Vector2(Mathf.Cos(radAngle) * forceMagnitude, Mathf.Sin(radAngle) * forceMagnitude);
