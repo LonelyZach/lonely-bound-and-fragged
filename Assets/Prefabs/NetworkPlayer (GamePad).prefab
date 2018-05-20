@@ -54,6 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HorizontalJoystickAxisName: Horizontal (Joystick1)
   VerticalJoystickAxisName: Vertical (Joystick1)
+  Up: 119
+  Down: 115
+  Left: 97
+  Right: 100
   AssociatedAvatarBehaviour: {fileID: 0}
 --- !u!114 &114849975361694188
 MonoBehaviour:

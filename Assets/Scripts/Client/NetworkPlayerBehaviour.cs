@@ -7,6 +7,11 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   public string HorizontalJoystickAxisName;
   public string VerticalJoystickAxisName;
 
+  public KeyCode Up;
+  public KeyCode Down;
+  public KeyCode Left;
+  public KeyCode Right;
+
   public AvatarBehaviour AssociatedAvatarBehaviour;
 
   public override void OnStartServer()
@@ -24,10 +29,18 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
       return;
     }
 
+    //Keyboard > joystick. Try this first
+    var keyboardForce = GetKeyboardAngleOfForce();
+
+    if(!float.IsNaN(keyboardForce))
+    {
+      Cmd_SetPlayerDrivenMovement(keyboardForce, 1.0f);
+      return;
+    }
+
+    //If no keyboard, then run the joystick checks
     float x = Input.GetAxis(HorizontalJoystickAxisName);
     float y = Input.GetAxis(VerticalJoystickAxisName);
-
-
     var unit = new Vector2(x, y);
 
     if (unit.magnitude > 1.0f)
@@ -53,6 +66,74 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
       }
     }
   }
+
+  /// <summary>
+  /// Copy pasted from the keyboardcontrollerbehaviour script. One will have to die eventually
+  /// </summary>
+  /// <returns></returns>
+  float GetKeyboardAngleOfForce()
+  {
+    var isUp = Input.GetKey(Up);
+    var isDown = Input.GetKey(Down);
+    var isLeft = Input.GetKey(Left);
+    var isRight = Input.GetKey(Right);
+
+    //Angle in degrees
+    float angleOfForce = float.NaN;
+
+    //First cancel out opposing key presses
+    if (isUp && isDown)
+    {
+      isUp = false;
+      isDown = false;
+    }
+    if (isLeft && isRight)
+    {
+      isLeft = false;
+      isRight = false;
+    }
+
+    if (isRight)
+    {
+      if (isDown)
+      {
+        angleOfForce = 315.0f;
+      }
+      else if (isUp)
+      {
+        angleOfForce = 45.0f;
+      }
+      else
+      {
+        angleOfForce = 0.0f;
+      }
+    }
+    else if (isLeft)
+    {
+      if (isDown)
+      {
+        angleOfForce = 215.0f;
+      }
+      else if (isUp)
+      {
+        angleOfForce = 135.0f;
+      }
+      else
+      {
+        angleOfForce = 180.0f;
+      }
+    }
+    else if (isDown)
+    {
+      angleOfForce = 270.0f;
+    }
+    else if (isUp)
+    {
+      angleOfForce = 90.0f;
+    }
+    return angleOfForce;
+  }
+
 
   [Command]
   protected void Cmd_LinkToAvatar()
