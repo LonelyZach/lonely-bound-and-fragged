@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1301173612703366}
+  m_RootGameObject: {fileID: 1735240828599384}
   m_IsPrefabParent: 1
---- !u!1 &1301173612703366
+--- !u!1 &1735240828599384
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4088028319534576}
-  - component: {fileID: 114373420475024280}
-  - component: {fileID: 114031469254682200}
+  - component: {fileID: 4954655340521950}
+  - component: {fileID: 114849975361694188}
+  - component: {fileID: 114522275983847140}
   m_Layer: 0
-  m_Name: Team
+  m_Name: NetworkPlayer (GamePad)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4088028319534576
+--- !u!4 &4954655340521950
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301173612703366}
+  m_GameObject: {fileID: 1735240828599384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,12 +41,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114031469254682200
+--- !u!114 &114522275983847140
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301173612703366}
+  m_GameObject: {fileID: 1735240828599384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a2c431415b6024ebc156805c65a875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HorizontalJoystickAxisName: Horizontal (Joystick1)
+  VerticalJoystickAxisName: Vertical (Joystick1)
+  AssociatedAvatarBehaviour: {fileID: 0}
+--- !u!114 &114849975361694188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1735240828599384}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
@@ -55,38 +69,21 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 75
-    i1: 203
-    i2: 218
-    i3: 103
-    i4: 84
-    i5: 54
-    i6: 26
-    i7: 148
-    i8: 91
-    i9: 62
-    i10: 238
-    i11: 37
-    i12: 157
-    i13: 231
-    i14: 176
-    i15: 145
-  m_ServerOnly: 1
-  m_LocalPlayerAuthority: 0
---- !u!114 &114373420475024280
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301173612703366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81cdb3f12a9e72a47bea757c1265c4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LazerPrefab: {fileID: 1170041381061590, guid: 61e7a2a08c33970479a0657061e4a24d,
-    type: 2}
-  LazerRendererPrefab: {fileID: 1470395955789558, guid: ea065e13e2e78874187285f71bace301,
-    type: 2}
-  Avatar0: {fileID: 0}
-  Avatar1: {fileID: 0}
+    i0: 190
+    i1: 44
+    i2: 189
+    i3: 154
+    i4: 82
+    i5: 37
+    i6: 247
+    i7: 116
+    i8: 171
+    i9: 99
+    i10: 142
+    i11: 35
+    i12: 235
+    i13: 127
+    i14: 236
+    i15: 132
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1

@@ -14,6 +14,8 @@ public class AvatarBehaviour : MonoBehaviour {
   public bool IsAlive { get { return _alive; } }
   public float PlayerForceAngle { get { return _playerDrivenMovement; } }
 
+  public bool HasNetworkController = false;
+
   private void Update()
   {
     AddPlayerDrivenMovementForce();
