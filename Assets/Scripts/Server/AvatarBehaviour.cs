@@ -5,6 +5,10 @@ public class AvatarBehaviour : NetworkBehaviour {
 
   private bool _alive = true;
 
+  private Vector2 _startPositon;
+
+  private Color _startColor; 
+
   public float MoveSpeed = 100.0f;
 
   private float _playerDrivenMovement = float.NaN;
@@ -17,6 +21,12 @@ public class AvatarBehaviour : NetworkBehaviour {
 
   [SyncVar]
   public float PlayerForceIntensityReadOnly = 0.0f;
+
+  void Start()
+  {
+    _startPositon = gameObject.transform.position;
+    _startColor = gameObject.GetComponent<SpriteRenderer>().color;
+  }
 
   private void Update()
   {
@@ -62,5 +72,19 @@ public class AvatarBehaviour : NetworkBehaviour {
     PlayerForceAngleReadOnly = float.NaN;
     PlayerForceIntensityReadOnly = 0.0f;
     gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+  }
+
+  public void ReturnToStartPosition()
+  {
+    gameObject.GetComponent<Rigidbody2D>().MovePosition(_startPositon);
+    gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+  }
+
+  [ClientRpc]
+  public void Rpc_Resurect()
+  {
+    _alive = true;
+    gameObject.GetComponent<SpriteRenderer>().color = _startColor;
   }
 }

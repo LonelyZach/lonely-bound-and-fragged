@@ -45,4 +45,13 @@ public class TeamBehaviour : NetworkBehaviour
       isTeamAlive = false;
     }
   }
+
+  public void ResetGame()
+  {
+    isTeamAlive = true;
+    avatar0Behavior.ReturnToStartPosition();
+    avatar1Behavior.ReturnToStartPosition();
+    avatar0Behavior.Rpc_Resurect();
+    avatar1Behavior.Rpc_Resurect();
+  }
 }
