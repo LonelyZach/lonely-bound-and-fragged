@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 100
-  HasNetworkController: 0
+  PlayerForceAngleReadOnly: 0
 --- !u!198 &198035919029073628
 ParticleSystem:
   m_ObjectHideFlags: 1
