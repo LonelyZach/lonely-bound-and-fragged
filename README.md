@@ -1,6 +1,6 @@
 # Lonely, Bound and Fragged
 
-COUNTDOWN: 62 DAYS
+COUNTDOWN: 45 DAYS
 
 ### MVP (Minimum Viable Product):
 2D GAME TOP DOWN<br />
