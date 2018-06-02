@@ -79,6 +79,6 @@ public class KeyboardControllerBehaviour : PlayerBehaviourBase
 
     //This is done whether or not we achieve a real angle, 
     //because we need to know if one is being applied at all
-    Cmd_SetPlayerDrivenMovement(angleOfForce);
+    Cmd_SetPlayerDrivenMovement(angleOfForce, 1.0f);
   }
 }
