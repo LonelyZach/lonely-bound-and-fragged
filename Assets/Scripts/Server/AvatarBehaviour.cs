@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class AvatarBehaviour : MonoBehaviour {
+public class AvatarBehaviour : NetworkBehaviour {
 
   private bool _alive = true;
+
+  private Vector2 _startPositon;
+
+  private Color _startColor; 
 
   public float MoveSpeed = 100.0f;
 
@@ -12,7 +15,18 @@ public class AvatarBehaviour : MonoBehaviour {
   private float _playerDrivenIntensity = 0.0f;
 
   public bool IsAlive { get { return _alive; } }
-  public float PlayerForceAngle { get { return _playerDrivenMovement; } }
+
+  [SyncVar]
+  public float PlayerForceAngleReadOnly = float.NaN;
+
+  [SyncVar]
+  public float PlayerForceIntensityReadOnly = 0.0f;
+
+  void Start()
+  {
+    _startPositon = gameObject.transform.position;
+    _startColor = gameObject.GetComponent<SpriteRenderer>().color;
+  }
 
   private void Update()
   {
@@ -24,7 +38,10 @@ public class AvatarBehaviour : MonoBehaviour {
   {
     if (_alive)
     {
+      PlayerForceAngleReadOnly = angleOfForce;
       _playerDrivenMovement = angleOfForce;
+
+      PlayerForceIntensityReadOnly = intensity;
       _playerDrivenIntensity = intensity;
     }
   }
@@ -52,6 +69,22 @@ public class AvatarBehaviour : MonoBehaviour {
   {
     _alive = false;
     _playerDrivenMovement = float.NaN;
+    PlayerForceAngleReadOnly = float.NaN;
+    PlayerForceIntensityReadOnly = 0.0f;
     gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+  }
+
+  public void ReturnToStartPosition()
+  {
+    gameObject.GetComponent<Rigidbody2D>().MovePosition(_startPositon);
+    gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+  }
+
+  [ClientRpc]
+  public void Rpc_Resurect()
+  {
+    _alive = true;
+    gameObject.GetComponent<SpriteRenderer>().color = _startColor;
   }
 }

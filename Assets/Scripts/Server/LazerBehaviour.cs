@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LazerBehaviour : MonoBehaviour {
+public class LazerBehaviour : NetworkBehaviour {
 
   public int SpringDistance = 3;
   public int SpringFrequency = 1;
@@ -13,13 +13,11 @@ public class LazerBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
   }
 	
 	// Update is called once per frame
 	void Update () {
     KillAvatarsInLazer();
-    Draw();
   }
 
   /// <summary>
@@ -45,13 +43,6 @@ public class LazerBehaviour : MonoBehaviour {
     springJoint.enableCollision = true;
     springJoint.distance = SpringDistance;
     springJoint.frequency = SpringFrequency;
-  }
-
-  private void Draw()
-  {
-    var renderer = gameObject.GetComponent<LineRenderer>();
-    renderer.SetPosition(0, _avatar0.gameObject.transform.position);
-    renderer.SetPosition(1, _avatar1.gameObject.transform.position);
   }
 
   private void KillAvatarsInLazer()

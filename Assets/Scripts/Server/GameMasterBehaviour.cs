@@ -36,7 +36,12 @@ public class GameMasterBehaviour : MonoBehaviour
     if(livingTeamCount <= 1)
     {
       //Then we need to change the scene back to the main menu
-      SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+      //SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+
+      foreach(var team in _teamBehaviorList)
+      {
+        team.ResetGame();
+      }
     }
   }
 }

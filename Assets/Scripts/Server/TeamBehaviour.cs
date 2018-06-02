@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.Networking;
 
-public class TeamBehaviour : MonoBehaviour
+public class TeamBehaviour : NetworkBehaviour
 {
+  public GameObject LazerPrefab;
+  public GameObject LazerRendererPrefab;
+
   public GameObject Avatar0;
   public GameObject Avatar1;
 
@@ -18,10 +21,14 @@ public class TeamBehaviour : MonoBehaviour
   {
     //Doing this works because the lazer doesn't have 'start' called until the first game 
     //update after the one that initializes this one
-    var lazer = (GameObject)Instantiate(Resources.Load("Lazer"));
-    var lazerBehavior = lazer.GetComponent<LazerBehaviour>();
+    var lazer = Instantiate(LazerPrefab);
+    var lazerBehaviour = lazer.GetComponent<LazerBehaviour>();
+    lazerBehaviour.Tether(Avatar0, Avatar1);
 
-    lazerBehavior.Tether(Avatar0, Avatar1);
+    var lazerRenderer = Instantiate(LazerRendererPrefab);
+    var lazerRendererBehaviour = lazerRenderer.GetComponent<LazerRendererBehaviour>();
+    lazerRendererBehaviour.Avatar0 = Avatar0;
+    lazerRendererBehaviour.Avatar1 = Avatar1;
 
     avatar0Behavior = Avatar0.GetComponent<AvatarBehaviour>();
     avatar1Behavior = Avatar1.GetComponent<AvatarBehaviour>();
@@ -37,5 +44,14 @@ public class TeamBehaviour : MonoBehaviour
     {
       isTeamAlive = false;
     }
+  }
+
+  public void ResetGame()
+  {
+    isTeamAlive = true;
+    avatar0Behavior.ReturnToStartPosition();
+    avatar1Behavior.ReturnToStartPosition();
+    avatar0Behavior.Rpc_Resurect();
+    avatar1Behavior.Rpc_Resurect();
   }
 }

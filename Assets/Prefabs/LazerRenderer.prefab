@@ -19,10 +19,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4788742600693458}
-  - component: {fileID: 114200131857117018}
   - component: {fileID: 120251887847140702}
+  - component: {fileID: 114947252024945960}
+  - component: {fileID: 114104006006612218}
   m_Layer: 0
-  m_Name: Lazer
+  m_Name: LazerRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114200131857117018
+--- !u!114 &114104006006612218
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,11 +50,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 1470395955789558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6b10803c9d37e94a8700b89ce3ae8ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 32f80a768db29fa4080233aebb741381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpringDistance: 3
-  SpringFrequency: 1
+  Avatar0: {fileID: 0}
+  Avatar1: {fileID: 0}
+--- !u!114 &114947252024945960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470395955789558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 234
+    i1: 6
+    i2: 94
+    i3: 19
+    i4: 226
+    i5: 231
+    i6: 136
+    i7: 116
+    i8: 24
+    i9: 114
+    i10: 133
+    i11: 247
+    i12: 27
+    i13: 172
+    i14: 227
+    i15: 1
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!120 &120251887847140702
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -67,6 +100,7 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 0}
   m_StaticBatchInfo:
@@ -97,24 +131,33 @@ LineRenderer:
     widthCurve:
       serializedVersion: 2
       m_Curve:
-      - serializedVersion: 2
+      - serializedVersion: 3
         time: 0.2125473
         value: 0.11764526
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 0.49998188
         value: 0.11764526
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 0.80917054
         value: 0.11764526
         inSlope: 0
         outSlope: 0
         tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0

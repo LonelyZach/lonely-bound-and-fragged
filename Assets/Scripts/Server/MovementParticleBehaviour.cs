@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementParticleBehaviour : MonoBehaviour {
 
@@ -17,13 +14,13 @@ public class MovementParticleBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
   {
-    var movementDirection = _avatarBehaviour.PlayerForceAngle + 90.0f;
+    var movementDirection = _avatarBehaviour.PlayerForceAngleReadOnly + 90.0f;
     if(movementDirection > 360.0f)
     {
       movementDirection -= 360.0f;
     }
 
-    if(!float.IsNaN(movementDirection))
+    if(!float.IsNaN(movementDirection) && _avatarBehaviour.PlayerForceIntensityReadOnly > 0.0f)
     {
       _particleSystem.gameObject.SetActive(true);
       gameObject.transform.eulerAngles = new Vector3(0, 0, movementDirection);
