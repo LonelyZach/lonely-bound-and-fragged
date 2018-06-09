@@ -37,7 +37,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   // Update is called once per frame
   void Update()
   {
-    if(_networkIdentity.isServer || !IsPlayerReady)
+    if(!_networkIdentity.hasAuthority || !IsPlayerReady)
     {
       return;
     }

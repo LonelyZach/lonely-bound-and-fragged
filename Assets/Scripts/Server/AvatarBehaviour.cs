@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 
 public class AvatarBehaviour : NetworkBehaviour {
 
-  private bool _alive = true;
 
   private Vector2 _startPositon;
 
@@ -22,6 +21,9 @@ public class AvatarBehaviour : NetworkBehaviour {
   [SyncVar]
   public float PlayerForceIntensityReadOnly = 0.0f;
 
+  [SyncVar]
+  private bool _alive = true;
+
   void Start()
   {
     _startPositon = gameObject.transform.position;
@@ -31,6 +33,10 @@ public class AvatarBehaviour : NetworkBehaviour {
   private void Update()
   {
     AddPlayerDrivenMovementForce();
+    if(!_alive)
+    {
+      gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+    }
   }
 
   // Update is called once per frame
@@ -71,7 +77,6 @@ public class AvatarBehaviour : NetworkBehaviour {
     _playerDrivenMovement = float.NaN;
     PlayerForceAngleReadOnly = float.NaN;
     PlayerForceIntensityReadOnly = 0.0f;
-    gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
   }
 
   public void ReturnToStartPosition()

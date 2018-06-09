@@ -89,7 +89,7 @@ public class GameMasterBehaviour : NetworkBehaviour
   void Update()
   {
     //Check to see if we are actually running yet, and initialize if not
-    if(!isInitialized)
+    if (!isInitialized)
     {
       Initialize();
       return;
@@ -107,15 +107,21 @@ public class GameMasterBehaviour : NetworkBehaviour
 
     //If only 1 or fewer teams left, reset the game.
     //This will be a spot for future expansion for a victory screen or something
-    if(livingTeamCount <= 1)
+    if (livingTeamCount <= 1)
     {
-      //Then we need to change the scene back to the main menu
-      SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-
-      //foreach(var team in _teamBehaviorList)
-      //{
-      //  team.ResetGame();
-      //}
+      StartCoroutine(ReturnToLobby());
     }
   }
+
+  IEnumerator ReturnToLobby()
+  {
+    //Then we need to change the scene back to the main menu
+    yield return new WaitForSeconds(3.0f);
+    foreach(var lobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
+    {
+      lobbyPlayer.readyToBegin = false;
+    }
+    LobbyManager.s_Singleton.ServerReturnToLobby();
+  }
 }
+

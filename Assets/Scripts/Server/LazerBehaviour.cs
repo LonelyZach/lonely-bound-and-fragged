@@ -24,6 +24,11 @@ public class LazerBehaviour : NetworkBehaviour
   private float Avatar1_x;
   [SyncVar]
   private float Avatar1_y;
+
+  private Vector3 Avatar0Position = Vector3.zero;
+  private Vector3 Avatar1Position = Vector3.zero;
+
+  private float updateInterval;
   #endregion
 
   // Use this for initialization
@@ -42,7 +47,26 @@ public class LazerBehaviour : NetworkBehaviour
       Avatar0_y = Avatar0.gameObject.transform.position.y;
       Avatar1_x = Avatar1.gameObject.transform.position.x;
       Avatar1_y = Avatar1.gameObject.transform.position.y;
+
+      Avatar0Position = new Vector3(Avatar0_x, Avatar0_y);
+      Avatar1Position = new Vector3(Avatar1_x, Avatar1_y);
       KillAvatarsInLazer();
+    }
+    //Attempt to do some smoothing on the client side
+    else if(_networkIdentity.isClient)
+    {
+      if(Avatar0Position == Vector3.zero || Avatar1Position == Vector3.zero || updateInterval > 0.11f) //9 times a second
+      {
+        Avatar0Position = new Vector3(Avatar0_x, Avatar0_y);
+        Avatar1Position = new Vector3(Avatar1_x, Avatar1_y);
+        updateInterval = 0;
+      }
+      else
+      {
+        updateInterval += Time.deltaTime;
+        Avatar0Position = Vector3.Lerp(Avatar0Position, new Vector3(Avatar0_x, Avatar0_y), 0.1f);
+        Avatar1Position = Vector3.Lerp(Avatar1Position, new Vector3(Avatar1_x, Avatar1_y), 0.1f);
+      }
     }
   }
 
@@ -50,8 +74,8 @@ public class LazerBehaviour : NetworkBehaviour
   private void Draw()
   {
     var renderer = gameObject.GetComponent<LineRenderer>();
-    renderer.SetPosition(0, new Vector3(Avatar0_x, Avatar0_y));
-    renderer.SetPosition(1, new Vector3(Avatar1_x, Avatar1_y));
+    renderer.SetPosition(0, Avatar0Position);
+    renderer.SetPosition(1, Avatar1Position);
   }
 
   /// <summary>
@@ -83,7 +107,7 @@ public class LazerBehaviour : NetworkBehaviour
   {
     foreach (var avatar in FindAvatarsInLazer())
     {
-      //avatar.Kill();
+      avatar.Kill();
     }
   }
 

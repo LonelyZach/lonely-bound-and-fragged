@@ -17,6 +17,7 @@ public class LazerRendererBehaviour : NetworkBehaviour
   [SyncVar]
   public float Avatar1_y;
 
+
   // Use this for initialization
   void Start () {
 
