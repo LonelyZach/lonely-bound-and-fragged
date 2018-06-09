@@ -6,7 +6,8 @@ public class AvatarBehaviour : NetworkBehaviour {
 
   private Vector2 _startPositon;
 
-  private Color _startColor; 
+  [SyncVar]
+  public Color startColor;
 
   public float MoveSpeed = 100.0f;
 
@@ -27,7 +28,7 @@ public class AvatarBehaviour : NetworkBehaviour {
   void Start()
   {
     _startPositon = gameObject.transform.position;
-    _startColor = gameObject.GetComponent<SpriteRenderer>().color;
+    gameObject.GetComponent<SpriteRenderer>().color = startColor;
   }
 
   private void Update()
@@ -90,6 +91,6 @@ public class AvatarBehaviour : NetworkBehaviour {
   public void Rpc_Resurect()
   {
     _alive = true;
-    gameObject.GetComponent<SpriteRenderer>().color = _startColor;
+    gameObject.GetComponent<SpriteRenderer>().color = startColor;
   }
 }

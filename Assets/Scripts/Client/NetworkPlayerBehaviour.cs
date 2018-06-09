@@ -12,6 +12,9 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   public KeyCode Left;
   public KeyCode Right;
 
+  public string avatarName = "";
+  public Color avatarColor = Color.red;
+
   /// <summary>
   /// This is only going to be set on the server side, the client is totally agnostic to this
   /// </summary>

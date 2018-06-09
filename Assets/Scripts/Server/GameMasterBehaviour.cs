@@ -60,6 +60,8 @@ public class GameMasterBehaviour : NetworkBehaviour
     {
       float x = PlacementRadius * Mathf.Cos(segment * iteration);
       float y = PlacementRadius * Mathf.Sin(segment * iteration);
+      var avatarBehaviour = DefaultPlayerAvatar.GetComponent<AvatarBehaviour>();
+      avatarBehaviour.startColor = player.avatarColor;
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
       
