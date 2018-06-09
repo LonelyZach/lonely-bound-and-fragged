@@ -12,19 +12,32 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   public KeyCode Left;
   public KeyCode Right;
 
-  public AvatarBehaviour AssociatedAvatarBehaviour;
+  /// <summary>
+  /// This is only going to be set on the server side, the client is totally agnostic to this
+  /// </summary>
+  private AvatarBehaviour _associatedAvatarBehaviour;
+    
+  public AvatarBehaviour AssociatedAvatarBehaviour { get { return _associatedAvatarBehaviour; } set { _associatedAvatarBehaviour = value; Debug.Log("Assigned avatar!"); } }
 
-  public override void OnStartServer()
+  private NetworkIdentity _networkIdentity;
+
+  /// <summary>
+  /// This flag lets the client know that the server has it properly handled
+  /// </summary>
+  [SyncVar]
+  private bool isPlayerReady = false;
+
+  public bool IsPlayerReady { get { return isPlayerReady; }  set { isPlayerReady = value; } }
+
+  private void Start()
   {
-    base.OnStartServer();
-
-    Cmd_LinkToAvatar();
+    _networkIdentity = GetComponent<NetworkIdentity>();
   }
 
   // Update is called once per frame
   void Update()
   {
-    if(Network.isServer)
+    if(_networkIdentity.isServer || !IsPlayerReady)
     {
       return;
     }
@@ -135,27 +148,27 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   }
 
 
-  [Command]
-  protected void Cmd_LinkToAvatar()
-  {
-    var networkPlayers = FindObjectsOfType<NetworkPlayerBehaviour>();
-    var avatars = FindObjectsOfType<AvatarBehaviour>();
+  //[Command]
+  //protected void Cmd_LinkToAvatar()
+  //{
+  //  var networkPlayers = FindObjectsOfType<NetworkPlayerBehaviour>();
+  //  var avatars = FindObjectsOfType<AvatarBehaviour>();
 
-    var uncontrolledAvatars = avatars.Where(a => !networkPlayers.Any(p => p.AssociatedAvatarBehaviour == a));
+  //  var uncontrolledAvatars = avatars.Where(a => !networkPlayers.Any(p => p.AssociatedAvatarBehaviour == a));
 
-    if (!uncontrolledAvatars.Any())
-    {
-      Debug.LogError("Found no uncontrolled avatar for the player.");
-    }
+  //  if (!uncontrolledAvatars.Any())
+  //  {
+  //    Debug.LogError("Found no uncontrolled avatar for the player.");
+  //  }
 
-    AssociatedAvatarBehaviour = uncontrolledAvatars.First();
-  }
+  //  AssociatedAvatarBehaviour = uncontrolledAvatars.First();
+  //}
 
   [Command]
   protected void Cmd_SetPlayerDrivenMovement(float angleOfForce, float intensity)
   {
     Debug.Log(string.Format("aof={0} intensity={1}", angleOfForce, intensity));
     intensity = Mathf.Clamp(intensity, 0.0f, 1.0f);
-    AssociatedAvatarBehaviour.SetPlayerDrivenMovement(angleOfForce, intensity);
+    _associatedAvatarBehaviour.SetPlayerDrivenMovement(angleOfForce, intensity);
   }
 }

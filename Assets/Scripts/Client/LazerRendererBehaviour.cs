@@ -7,8 +7,18 @@ public class LazerRendererBehaviour : NetworkBehaviour
   public GameObject Avatar0;
   public GameObject Avatar1;
 
-	// Use this for initialization
-	void Start () {
+  [SyncVar]
+  public float Avatar0_x;
+  [SyncVar]
+  public float Avatar0_y;
+
+  [SyncVar]
+  public float Avatar1_x;
+  [SyncVar]
+  public float Avatar1_y;
+
+  // Use this for initialization
+  void Start () {
 
   }
 	

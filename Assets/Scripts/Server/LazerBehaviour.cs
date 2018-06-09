@@ -3,21 +3,55 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class LazerBehaviour : NetworkBehaviour {
+public class LazerBehaviour : NetworkBehaviour
+{
 
   public int SpringDistance = 3;
   public int SpringFrequency = 1;
 
-  private GameObject _avatar0;
-  private GameObject _avatar1;
+  public GameObject Avatar0;
+  public GameObject Avatar1;
+  private NetworkIdentity _networkIdentity;
 
-	// Use this for initialization
-	void Start () {
+  #region Client variables for local drawing
+  //Individual x and y because that's how SyncVar works
+  [SyncVar]
+  private float Avatar0_x;
+  [SyncVar]
+  private float Avatar0_y;
+
+  [SyncVar]
+  private float Avatar1_x;
+  [SyncVar]
+  private float Avatar1_y;
+  #endregion
+
+  // Use this for initialization
+  void Start()
+  {
+    _networkIdentity = GetComponent<NetworkIdentity>();
   }
-	
-	// Update is called once per frame
-	void Update () {
-    KillAvatarsInLazer();
+
+  // Update is called once per frame
+  void Update()
+  {
+    Draw();
+    if(_networkIdentity.isServer)
+    {
+      Avatar0_x = Avatar0.gameObject.transform.position.x;
+      Avatar0_y = Avatar0.gameObject.transform.position.y;
+      Avatar1_x = Avatar1.gameObject.transform.position.x;
+      Avatar1_y = Avatar1.gameObject.transform.position.y;
+      KillAvatarsInLazer();
+    }
+  }
+
+
+  private void Draw()
+  {
+    var renderer = gameObject.GetComponent<LineRenderer>();
+    renderer.SetPosition(0, new Vector3(Avatar0_x, Avatar0_y));
+    renderer.SetPosition(1, new Vector3(Avatar1_x, Avatar1_y));
   }
 
   /// <summary>
@@ -27,8 +61,8 @@ public class LazerBehaviour : NetworkBehaviour {
   /// <param name="avatar1"></param>
   public void Tether(GameObject avatar0, GameObject avatar1)
   {
-    _avatar0 = avatar0;
-    _avatar1 = avatar1;
+    Avatar0 = avatar0;
+    Avatar1 = avatar1;
 
     // Spring joints need to be on one of the objects being joined, so, we'll create it here.
     CreateSpringJoint();
@@ -36,8 +70,8 @@ public class LazerBehaviour : NetworkBehaviour {
 
   private void CreateSpringJoint()
   {
-    var springJoint = _avatar0.AddComponent<SpringJoint2D>();
-    springJoint.connectedBody = _avatar1.gameObject.GetComponent<Rigidbody2D>();
+    var springJoint = Avatar0.AddComponent<SpringJoint2D>();
+    springJoint.connectedBody = Avatar1.gameObject.GetComponent<Rigidbody2D>();
     springJoint.autoConfigureDistance = false;
     springJoint.autoConfigureConnectedAnchor = false;
     springJoint.enableCollision = true;
@@ -47,17 +81,17 @@ public class LazerBehaviour : NetworkBehaviour {
 
   private void KillAvatarsInLazer()
   {
-    foreach(var avatar in FindAvatarsInLazer())
+    foreach (var avatar in FindAvatarsInLazer())
     {
-      avatar.Kill();
+      //avatar.Kill();
     }
   }
 
   private IEnumerable<AvatarBehaviour> FindAvatarsInLazer()
   {
-    return Physics2D.LinecastAll(_avatar0.transform.position, _avatar1.transform.position)
+    return Physics2D.LinecastAll(Avatar0.transform.position, Avatar1.transform.position)
       .Select(x => x.collider.gameObject)
-      .Where(x => x != _avatar0 && x != _avatar1)
+      .Where(x => x != Avatar0 && x != Avatar1)
       .Select(x => x.GetComponent<AvatarBehaviour>())
       .Where(x => x != null);
   }

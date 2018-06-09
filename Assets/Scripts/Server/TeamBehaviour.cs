@@ -4,13 +4,12 @@ using UnityEngine.Networking;
 public class TeamBehaviour : NetworkBehaviour
 {
   public GameObject LazerPrefab;
-  public GameObject LazerRendererPrefab;
 
   public GameObject Avatar0;
   public GameObject Avatar1;
 
-  private AvatarBehaviour avatar0Behavior;
-  private AvatarBehaviour avatar1Behavior;
+  private AvatarBehaviour avatar0Behaviour;
+  private AvatarBehaviour avatar1Behaviour;
 
   private bool isTeamAlive = true;
 
@@ -21,17 +20,17 @@ public class TeamBehaviour : NetworkBehaviour
   {
     //Doing this works because the lazer doesn't have 'start' called until the first game 
     //update after the one that initializes this one
-    var lazer = Instantiate(LazerPrefab);
-    var lazerBehaviour = lazer.GetComponent<LazerBehaviour>();
+
+    LazerBehaviour lazerBehaviour = LazerPrefab.GetComponent<LazerBehaviour>();
+    lazerBehaviour.Avatar0 = Avatar0;
+    lazerBehaviour.Avatar1 = Avatar1;
     lazerBehaviour.Tether(Avatar0, Avatar1);
 
-    var lazerRenderer = Instantiate(LazerRendererPrefab);
-    var lazerRendererBehaviour = lazerRenderer.GetComponent<LazerRendererBehaviour>();
-    lazerRendererBehaviour.Avatar0 = Avatar0;
-    lazerRendererBehaviour.Avatar1 = Avatar1;
+    var lazer = (GameObject)Instantiate(LazerPrefab, new Vector3(0, 0), Quaternion.identity);
+    NetworkServer.Spawn(lazer);
 
-    avatar0Behavior = Avatar0.GetComponent<AvatarBehaviour>();
-    avatar1Behavior = Avatar1.GetComponent<AvatarBehaviour>();
+    avatar0Behaviour = Avatar0.GetComponent<AvatarBehaviour>();
+    avatar1Behaviour = Avatar1.GetComponent<AvatarBehaviour>();
   }
 
   // Update is called once per frame
@@ -40,7 +39,7 @@ public class TeamBehaviour : NetworkBehaviour
     //Update status of the avatar being alive or dead.
     //This can probably be updated with something more elegant like a listener system
     //if we decide we need it.
-    if (!avatar0Behavior.IsAlive && !avatar1Behavior.IsAlive)
+    if (!avatar0Behaviour.IsAlive && !avatar1Behaviour.IsAlive)
     {
       isTeamAlive = false;
     }
@@ -49,9 +48,9 @@ public class TeamBehaviour : NetworkBehaviour
   public void ResetGame()
   {
     isTeamAlive = true;
-    avatar0Behavior.ReturnToStartPosition();
-    avatar1Behavior.ReturnToStartPosition();
-    avatar0Behavior.Rpc_Resurect();
-    avatar1Behavior.Rpc_Resurect();
+    avatar0Behaviour.ReturnToStartPosition();
+    avatar1Behaviour.ReturnToStartPosition();
+    avatar0Behaviour.Rpc_Resurect();
+    avatar1Behaviour.Rpc_Resurect();
   }
 }

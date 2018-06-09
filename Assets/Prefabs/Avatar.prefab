@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475475540781762}
   - component: {fileID: 114142287770539966}
+  - component: {fileID: 114053390974273994}
   m_Layer: 0
   m_Name: MovementParticles
   m_TagString: Untagged
@@ -173,6 +174,38 @@ MonoBehaviour:
     i15: 142
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114053390974273994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1287584444555138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 159
+    i1: 70
+    i2: 3
+    i3: 117
+    i4: 105
+    i5: 223
+    i6: 170
+    i7: 244
+    i8: 170
+    i9: 42
+    i10: 175
+    i11: 67
+    i12: 9
+    i13: 109
+    i14: 128
+    i15: 142
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114142287770539966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 100
   PlayerForceAngleReadOnly: 0
+  PlayerForceIntensityReadOnly: 0
 --- !u!198 &198035919029073628
 ParticleSystem:
   m_ObjectHideFlags: 1
