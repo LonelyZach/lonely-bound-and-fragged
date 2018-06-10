@@ -11,6 +11,7 @@ namespace Prototype.NetworkLobby
     //Any LobbyHook can then grab it and pass those value to the game player prefab (see the Pong Example in the Samples Scenes)
     public class LobbyPlayer : NetworkLobbyPlayer
     {
+        private const int MAX_CHARACTER_LIMIT = 12;
         static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
         //used on server to avoid assigning the same color to two player
         static List<int> _colorInUse = new List<int>();
@@ -102,6 +103,7 @@ namespace Prototype.NetworkLobby
         void SetupLocalPlayer()
         {
             nameInput.interactable = true;
+      nameInput.characterLimit = MAX_CHARACTER_LIMIT;
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
 
