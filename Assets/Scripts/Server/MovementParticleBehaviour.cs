@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementParticleBehaviour : MonoBehaviour {
 
@@ -15,12 +12,18 @@ public class MovementParticleBehaviour : MonoBehaviour {
   }
 	
 	// Update is called once per frame
-	void Update () {
-    var movementDirections = _avatarBehaviour.GetPlayerDirvenMovementWithOpposingDirectionsIgnored();
+	void Update ()
+  {
+    var movementDirection = _avatarBehaviour.PlayerForceAngleReadOnly + 90.0f;
+    if(movementDirection > 360.0f)
+    {
+      movementDirection -= 360.0f;
+    }
 
-    if(movementDirections.Any())
+    if(!float.IsNaN(movementDirection) && _avatarBehaviour.PlayerForceIntensityReadOnly > 0.0f)
     {
       _particleSystem.gameObject.SetActive(true);
+      gameObject.transform.eulerAngles = new Vector3(0, 0, movementDirection);
     }
     else
     {
@@ -28,39 +31,6 @@ public class MovementParticleBehaviour : MonoBehaviour {
       {
         _particleSystem.gameObject.SetActive(false);
       }
-    }
-
-    if(movementDirections.Contains(Direction.Down) && movementDirections.Contains(Direction.Right))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, 45);
-    }
-    else if (movementDirections.Contains(Direction.Down) && movementDirections.Contains(Direction.Left))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, -45);
-    }
-    else if (movementDirections.Contains(Direction.Up) && movementDirections.Contains(Direction.Right))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, 135);
-    }
-    else if (movementDirections.Contains(Direction.Up) && movementDirections.Contains(Direction.Left))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, -135);
-    }
-    else if (movementDirections.Contains(Direction.Down))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
-    }
-    else if (movementDirections.Contains(Direction.Up))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, 180);
-    }
-    else if (movementDirections.Contains(Direction.Right))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, 90);
-    }
-    else if (movementDirections.Contains(Direction.Left))
-    {
-      gameObject.transform.eulerAngles = new Vector3(0, 0, -90);
     }
   }
 }

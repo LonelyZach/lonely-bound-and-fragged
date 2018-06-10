@@ -1,80 +1,96 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class AvatarBehaviour : MonoBehaviour {
+public class AvatarBehaviour : NetworkBehaviour {
 
-  private bool _alive = true;
+
+  private Vector2 _startPositon;
+
+  [SyncVar]
+  public Color startColor;
 
   public float MoveSpeed = 100.0f;
 
-  private List<Direction> _playerDrivenMovement = new List<Direction>();
+  private float _playerDrivenMovement = float.NaN;
+  private float _playerDrivenIntensity = 0.0f;
 
   public bool IsAlive { get { return _alive; } }
 
+  [SyncVar]
+  public float PlayerForceAngleReadOnly = float.NaN;
+
+  [SyncVar]
+  public float PlayerForceIntensityReadOnly = 0.0f;
+
+  [SyncVar]
+  private bool _alive = true;
+
+  void Start()
+  {
+    _startPositon = gameObject.transform.position;
+    gameObject.GetComponent<SpriteRenderer>().color = startColor;
+  }
+
   private void Update()
   {
-    AddPlaterDrivenMovementForce();
+    AddPlayerDrivenMovementForce();
+    if(!_alive)
+    {
+      gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+    }
   }
 
   // Update is called once per frame
-  public void SetPlayerDrivenMovement(List<Direction> directions)
+  public void SetPlayerDrivenMovement(float angleOfForce, float intensity)
   {
     if (_alive)
     {
-      _playerDrivenMovement = directions;
+      PlayerForceAngleReadOnly = angleOfForce;
+      _playerDrivenMovement = angleOfForce;
+
+      PlayerForceIntensityReadOnly = intensity;
+      _playerDrivenIntensity = intensity;
     }
   }
 
-  private void AddPlaterDrivenMovementForce()
+  private void AddPlayerDrivenMovementForce()
   {
-    if (_playerDrivenMovement.Contains(Direction.Up))
+    //Precondition is that our prime variable is a number and valid angle
+    if(float.IsNaN(_playerDrivenMovement) || _playerDrivenMovement < 0.0f || _playerDrivenMovement > 360.0f)
     {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, MoveSpeed * Time.deltaTime), ForceMode2D.Force);
+      return;
     }
-    if (_playerDrivenMovement.Contains(Direction.Left))
-    {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-MoveSpeed * Time.deltaTime, 0), ForceMode2D.Force);
-    }
-    if (_playerDrivenMovement.Contains(Direction.Down))
-    {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -MoveSpeed * Time.deltaTime), ForceMode2D.Force);
-    }
-    if (_playerDrivenMovement.Contains(Direction.Right))
-    {
-      gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(MoveSpeed * Time.deltaTime, 0), ForceMode2D.Force);
-    }
+
+    //If preconditions met, make some calculations!
+    float radAngle = Mathf.Deg2Rad * _playerDrivenMovement;
+    float forceMagnitude = MoveSpeed * Time.deltaTime * _playerDrivenIntensity;
+
+    //Determine the angle with simple trig
+    var forceVector = new Vector2(Mathf.Cos(radAngle) * forceMagnitude, Mathf.Sin(radAngle) * forceMagnitude);
+
+    //Apply the force to the game object
+    gameObject.GetComponent<Rigidbody2D>().AddForce(forceVector, ForceMode2D.Force);
   }
 
   public void Kill()
   {
     _alive = false;
-    _playerDrivenMovement = new List<Direction>();
-    gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+    _playerDrivenMovement = float.NaN;
+    PlayerForceAngleReadOnly = float.NaN;
+    PlayerForceIntensityReadOnly = 0.0f;
   }
 
-  public IEnumerable<Direction> GetPlayerDirvenMovementWithOpposingDirectionsIncluded()
+  public void ReturnToStartPosition()
   {
-    return _playerDrivenMovement;
+    gameObject.GetComponent<Rigidbody2D>().MovePosition(_startPositon);
+    gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
   }
 
-  public IEnumerable<Direction> GetPlayerDirvenMovementWithOpposingDirectionsIgnored()
+  [ClientRpc]
+  public void Rpc_Resurect()
   {
-    if (_playerDrivenMovement.Contains(Direction.Left) && !_playerDrivenMovement.Contains(Direction.Right))
-    {
-      yield return Direction.Left;
-    }
-    if (_playerDrivenMovement.Contains(Direction.Right) && !_playerDrivenMovement.Contains(Direction.Left))
-    {
-      yield return Direction.Right;
-    }
-    if (_playerDrivenMovement.Contains(Direction.Up) && !_playerDrivenMovement.Contains(Direction.Down))
-    {
-      yield return Direction.Up;
-    }
-    if (_playerDrivenMovement.Contains(Direction.Down) && !_playerDrivenMovement.Contains(Direction.Up))
-    {
-      yield return Direction.Down;
-    }
+    _alive = true;
+    gameObject.GetComponent<SpriteRenderer>().color = startColor;
   }
 }
