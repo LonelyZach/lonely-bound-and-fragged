@@ -7,7 +7,8 @@ public class LazerBehaviour : NetworkBehaviour
 {
 
   public int SpringDistance = 3;
-  public int SpringFrequency = 1;
+  public float SpringFrequency = 1;
+  public float SpringDampingRatio = 1.0f;
 
   public GameObject Avatar0;
   public GameObject Avatar1;
@@ -101,6 +102,7 @@ public class LazerBehaviour : NetworkBehaviour
     springJoint.enableCollision = true;
     springJoint.distance = SpringDistance;
     springJoint.frequency = SpringFrequency;
+    springJoint.dampingRatio = SpringDampingRatio;
   }
 
   private void KillAvatarsInLazer()

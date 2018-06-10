@@ -23,6 +23,9 @@ public class AvatarBehaviour : NetworkBehaviour {
   public float PlayerForceIntensityReadOnly = 0.0f;
 
   [SyncVar]
+  public bool IsWinner = false;
+
+  [SyncVar]
   private bool _alive = true;
 
   void Start()
@@ -37,6 +40,18 @@ public class AvatarBehaviour : NetworkBehaviour {
     if(!_alive)
     {
       gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+    }
+
+    if(IsWinner)
+    {
+      if(_alive)
+      {
+        ShowNiceCrown();
+      }
+      else
+      {
+        ShowTarnishedCrown();
+      }
     }
   }
 
@@ -85,6 +100,18 @@ public class AvatarBehaviour : NetworkBehaviour {
     gameObject.GetComponent<Rigidbody2D>().MovePosition(_startPositon);
     gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+  }
+
+  private void ShowNiceCrown()
+  {
+    gameObject.transform.Find("CrownSprite").gameObject.SetActive(true);
+    gameObject.transform.Find("TarnishedCrownSprite").gameObject.SetActive(false);
+  }
+
+  private void ShowTarnishedCrown()
+  {
+    gameObject.transform.Find("CrownSprite").gameObject.SetActive(false);
+    gameObject.transform.Find("TarnishedCrownSprite").gameObject.SetActive(true);
   }
 
   [ClientRpc]
