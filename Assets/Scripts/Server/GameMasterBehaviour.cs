@@ -24,6 +24,9 @@ public class GameMasterBehaviour : NetworkBehaviour
 
   private bool isInitialized = false;
 
+  // When this is false, the GameMasterBehavior has begun returning to the loby and should no longer execute its normal behaviors.
+  private bool running = true;
+
   // Use this for initialization
   void Start()
   {
@@ -38,7 +41,7 @@ public class GameMasterBehaviour : NetworkBehaviour
     allNetworkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
     numberOfCreatedPlayers = allNetworkPlayers.Length;
 
-    if(numberOfCreatedPlayers < numberOfLobbyPlayers)
+    if (numberOfCreatedPlayers < numberOfLobbyPlayers)
     {
       //We can't initialize yet!
       return;
@@ -65,7 +68,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       avatarBehaviour.startColor = player.avatarColor;
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
-      
+
       player.AssociatedAvatarBehaviour = newAvatar.GetComponent<AvatarBehaviour>();
       _avatars.Add(newAvatar);
       player.IsPlayerReady = true;
@@ -79,7 +82,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       teamBehaviour.Avatar0 = _avatars[i];
       teamBehaviour.Avatar1 = _avatars[i + 1];
 
-      GameObject team = (GameObject)Instantiate(DefaultTeam, new Vector3(0,0), Quaternion.identity);
+      GameObject team = (GameObject)Instantiate(DefaultTeam, new Vector3(0, 0), Quaternion.identity);
       NetworkServer.Spawn(team);
 
       _teamBehaviorList.Add(team.GetComponent<TeamBehaviour>());
@@ -91,6 +94,11 @@ public class GameMasterBehaviour : NetworkBehaviour
   // Update is called once per frame
   void Update()
   {
+    if (!running)
+    {
+      return;
+    }
+
     //Check to see if we are actually running yet, and initialize if not
     if (!isInitialized)
     {
@@ -120,11 +128,8 @@ public class GameMasterBehaviour : NetworkBehaviour
   IEnumerator ReturnToLobby()
   {
     //Then we need to change the scene back to the main menu
+    running = false;
     yield return new WaitForSeconds(3.0f);
-    foreach(var lobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
-    {
-      lobbyPlayer.readyToBegin = false;
-    }
     LobbyManager.s_Singleton.ServerReturnToLobby();
   }
 
