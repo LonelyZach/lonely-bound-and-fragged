@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/LocalController.unity
     guid: 6db30d46f38389d48beea29e05eae2a6
   - enabled: 0
-    path: Assets/Gameplay.unity
-    guid: 17ce406a6b00f4845b389009871c9fc5
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/TestLobbyGame.unity
+    path: Assets/Gameplay.unity
     guid: 1003e806ab3bcd447a756f28edfb3f0f
   m_configObjects: {}
