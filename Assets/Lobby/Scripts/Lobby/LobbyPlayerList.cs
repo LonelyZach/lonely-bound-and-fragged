@@ -58,14 +58,18 @@ namespace Prototype.NetworkLobby
       PlayerListModified();
     }
 
-    public void RemovePlayer(LobbyPlayer player)
+    public void RemovePlayer(LobbyPlayer player, bool isBeingDestroyed = false)
     {
       _players.Remove(player);
       PlayerListModified();
 
-      var numPlayers = LobbyManager.s_Singleton.numPlayers;
-      LobbyPlayerList._instance.DisplayOddPlayerWarning(numPlayers % 2 == 1 && numPlayers >= 4);
-      LobbyPlayerList._instance.DisplayMinPlayerWarning(numPlayers < 4);
+      //This hides some client cleanup errors
+      if (!isBeingDestroyed)
+      {
+        var numPlayers = LobbyManager.s_Singleton.numPlayers;
+        LobbyPlayerList._instance.DisplayOddPlayerWarning(numPlayers % 2 == 1 && numPlayers >= 4);
+        LobbyPlayerList._instance.DisplayMinPlayerWarning(numPlayers < 4);
+      }
     }
 
     public void PlayerListModified()

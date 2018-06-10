@@ -334,10 +334,18 @@ namespace Prototype.NetworkLobby
 
             return true;
         }
+    public override void OnLobbyServerSceneChanged(string sceneName)
+    {
+      base.OnLobbyServerSceneChanged(sceneName);
 
-        // --- Countdown management
+      if (sceneName == this.lobbyScene)
+      {
+        OnPlayersNumberModified(0);
+      }
+    }
+    // --- Countdown management
 
-        public override void OnLobbyServerPlayersReady()
+    public override void OnLobbyServerPlayersReady()
         {
 			bool allready = true;
 			for(int i = 0; i < lobbySlots.Length; ++i)
