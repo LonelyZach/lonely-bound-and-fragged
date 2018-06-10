@@ -1,6 +1,7 @@
 ﻿using Prototype.NetworkLobby;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -119,6 +120,7 @@ public class GameMasterBehaviour : NetworkBehaviour
     //This will be a spot for future expansion for a victory screen or something
     if (livingTeamCount <= 1)
     {
+      InformAvatarsThatTheyHaveWon(_teamBehaviorList.Where(x => x.IsTeamAlive).SelectMany(x => x.AvatarBehaviours));
       StartCoroutine(ReturnToLobby());
     }
   }
@@ -129,6 +131,14 @@ public class GameMasterBehaviour : NetworkBehaviour
     running = false;
     yield return new WaitForSeconds(3.0f);
     LobbyManager.s_Singleton.ServerReturnToLobby();
+  }
+
+  private void InformAvatarsThatTheyHaveWon(IEnumerable<AvatarBehaviour> avatars)
+  {
+    foreach(var winner in avatars)
+    {
+      winner.IsWinner = true;
+    }
   }
 }
 

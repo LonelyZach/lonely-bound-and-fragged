@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
 
 public class TeamBehaviour : NetworkBehaviour
@@ -11,9 +12,16 @@ public class TeamBehaviour : NetworkBehaviour
   private AvatarBehaviour avatar0Behaviour;
   private AvatarBehaviour avatar1Behaviour;
 
-  private bool isTeamAlive = true;
+  public IEnumerable<AvatarBehaviour> AvatarBehaviours
+  {
+    get
+    {
+      yield return avatar0Behaviour;
+      yield return avatar1Behaviour;
+    }
+  }
 
-  public bool IsTeamAlive { get { return isTeamAlive; } }
+  public bool IsTeamAlive { get { return avatar0Behaviour.IsAlive || avatar1Behaviour.IsAlive; } }
 
   // Use this for initialization
   void Start()
@@ -36,18 +44,10 @@ public class TeamBehaviour : NetworkBehaviour
   // Update is called once per frame
   void Update()
   {
-    //Update status of the avatar being alive or dead.
-    //This can probably be updated with something more elegant like a listener system
-    //if we decide we need it.
-    if (!avatar0Behaviour.IsAlive && !avatar1Behaviour.IsAlive)
-    {
-      isTeamAlive = false;
-    }
   }
 
   public void ResetGame()
   {
-    isTeamAlive = true;
     avatar0Behaviour.ReturnToStartPosition();
     avatar1Behaviour.ReturnToStartPosition();
     avatar0Behaviour.Rpc_Resurect();
