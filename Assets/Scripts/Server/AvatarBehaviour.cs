@@ -8,6 +8,8 @@ public class AvatarBehaviour : NetworkBehaviour {
 
   [SyncVar]
   public Color startColor;
+  public string avatarName;
+
 
   public float MoveSpeed = 100.0f;
 
@@ -32,6 +34,7 @@ public class AvatarBehaviour : NetworkBehaviour {
   {
     _startPositon = gameObject.transform.position;
     gameObject.GetComponent<SpriteRenderer>().color = startColor;
+    gameObject.transform.Find("Nameplate").gameObject.GetComponent<TextMesh>().text = avatarName;
   }
 
   private void Update()
