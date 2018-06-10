@@ -339,51 +339,51 @@ Prefab:
     - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1857122265365456, guid: 5f0a348720825d64f820a046359d49a3, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 678.5
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1357
       objectReference: {fileID: 0}
     - target: {fileID: 224319088642537580, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
@@ -403,7 +403,7 @@ Prefab:
     - target: {fileID: 114541892238915322, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_MinHeight
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f0a348720825d64f820a046359d49a3, type: 2}

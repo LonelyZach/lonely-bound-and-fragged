@@ -163,7 +163,7 @@ namespace Prototype.NetworkLobby
         Text textComponent = readyButton.transform.GetChild(0).GetComponent<Text>();
         textComponent.text = "READY";
         textComponent.color = ReadyColor;
-        readyButton.interactable = false;
+        readyButton.interactable = true;
         colorButton.interactable = false;
         nameInput.interactable = false;
       }
@@ -210,7 +210,14 @@ namespace Prototype.NetworkLobby
 
     public void OnReadyClicked()
     {
-      SendReadyToBeginMessage();
+      if (!readyToBegin)
+      {
+        SendReadyToBeginMessage();
+      }
+      else
+      {
+        SendNotReadyToBeginMessage();
+      }
     }
 
     public void OnNameChanged(string str)
