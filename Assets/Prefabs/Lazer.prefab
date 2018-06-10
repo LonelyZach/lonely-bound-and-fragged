@@ -86,7 +86,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpringDistance: 3
-  SpringFrequency: 1
+  SpringFrequency: 0.5
+  SpringDampingRatio: 0.1
   Avatar0: {fileID: 0}
   Avatar1: {fileID: 0}
 --- !u!120 &120768712097318720
