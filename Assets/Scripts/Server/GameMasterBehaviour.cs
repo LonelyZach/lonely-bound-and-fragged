@@ -58,9 +58,12 @@ public class GameMasterBehaviour : NetworkBehaviour
 
     int iteration = 0;
 
+    // Do a shuffle to make the teams randomized
+    System.Random rnd = new System.Random();
+    NetworkPlayerBehaviour[] randomizedNetworkPlayers = allNetworkPlayers.OrderBy(x => rnd.Next()).ToArray();
 
     //Spawn an avatar for each player in a circular pattern
-    foreach (NetworkPlayerBehaviour player in allNetworkPlayers)
+    foreach (NetworkPlayerBehaviour player in randomizedNetworkPlayers)
     {
       float x = PlacementRadius * Mathf.Cos(segment * iteration);
       float y = PlacementRadius * Mathf.Sin(segment * iteration);
