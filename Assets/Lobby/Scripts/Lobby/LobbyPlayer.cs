@@ -50,7 +50,7 @@ namespace Prototype.NetworkLobby
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(1);
 
             LobbyPlayerList._instance.AddPlayer(this);
-            LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
+            LobbyPlayerList._instance.DisplayOddPlayerWarning(isServer && LobbyManager.s_Singleton.numPlayers % 2 == 1);
 
             if (isLocalPlayer)
             {

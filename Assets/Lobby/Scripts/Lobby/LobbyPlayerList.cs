@@ -11,7 +11,7 @@ namespace Prototype.NetworkLobby
         public static LobbyPlayerList _instance = null;
 
         public RectTransform playerListContentTransform;
-        public GameObject warningDirectPlayServer;
+        public GameObject oddPlayerWarning;
         public Transform addButtonRow;
 
         protected VerticalLayoutGroup _layout;
@@ -23,10 +23,10 @@ namespace Prototype.NetworkLobby
             _layout = playerListContentTransform.GetComponent<VerticalLayoutGroup>();
         }
 
-        public void DisplayDirectServerWarning(bool enabled)
+        public void DisplayOddPlayerWarning(bool enabled)
         {
-            if(warningDirectPlayServer != null)
-                warningDirectPlayServer.SetActive(enabled);
+            if(oddPlayerWarning != null)
+              oddPlayerWarning.SetActive(enabled);
         }
 
         void Update()

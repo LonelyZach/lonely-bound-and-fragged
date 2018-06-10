@@ -331,11 +331,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114414368160844194, guid: 5f0a348720825d64f820a046359d49a3,
-        type: 2}
-      propertyPath: warningDirectPlayServer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 114058541867446622, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_Text
