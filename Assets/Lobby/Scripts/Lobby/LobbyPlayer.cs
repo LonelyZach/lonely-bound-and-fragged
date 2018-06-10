@@ -25,6 +25,9 @@ namespace Prototype.NetworkLobby
     public GameObject localIcone;
     public GameObject remoteIcone;
 
+    [SyncVar(hook = "OnMyDataChange")]
+    public PersistentPlayerData playerData = new PersistentPlayerData(Color.white, "");
+
     //OnMyName function will be invoked on clients when server change the value of playerName
     [SyncVar(hook = "OnMyName")]
     public string playerName = "";
@@ -187,16 +190,22 @@ namespace Prototype.NetworkLobby
 
     ///===== callback from sync var
 
+    public void OnMyDataChange(PersistentPlayerData data)
+    {
+      this.playerData = data;
+    }
     public void OnMyName(string newName)
     {
       playerName = newName;
       nameInput.text = playerName;
+      playerData.playerName = newName;
     }
 
     public void OnMyColor(Color newColor)
     {
       playerColor = newColor;
       colorButton.GetComponent<Image>().color = newColor;
+      playerData.playerColor = newColor;
     }
 
     //===== UI Handler

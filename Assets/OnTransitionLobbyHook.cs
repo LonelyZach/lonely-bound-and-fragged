@@ -11,7 +11,6 @@ public class OnTransitionLobbyHook : LobbyHook {
     LobbyPlayer lobby = lobbyPlayer.GetComponent<LobbyPlayer>();
     NetworkPlayerBehaviour player = gamePlayer.GetComponent<NetworkPlayerBehaviour>();
 
-    player.avatarName = lobby.name;
-    player.avatarColor = lobby.playerColor;
+    player.playerData = lobby.playerData;
   }
 }

@@ -16,7 +16,7 @@ public class GameMasterBehaviour : NetworkBehaviour
 
   private List<TeamBehaviour> _teamBehaviorList = new List<TeamBehaviour>();
 
-  private List<GameObject> _networkPlayers = new List<GameObject>();
+  private NetworkPlayerBehaviour[] _networkPlayers = new NetworkPlayerBehaviour[0];
 
   private List<GameObject> _avatars = new List<GameObject>();
 
@@ -36,10 +36,9 @@ public class GameMasterBehaviour : NetworkBehaviour
   void Initialize()
   {
     int numberOfCreatedPlayers = 0;
-    NetworkPlayerBehaviour[] allNetworkPlayers = new NetworkPlayerBehaviour[0];
 
-    allNetworkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
-    numberOfCreatedPlayers = allNetworkPlayers.Length;
+    _networkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
+    numberOfCreatedPlayers = _networkPlayers.Length;
 
     if (numberOfCreatedPlayers < numberOfLobbyPlayers)
     {
@@ -47,12 +46,12 @@ public class GameMasterBehaviour : NetworkBehaviour
       return;
     }
 
-    if (allNetworkPlayers.Length % 2 != 0)
+    if (_networkPlayers.Length % 2 != 0)
     {
-      Debug.LogError("WTF, why is there an uneven number of players? There are: " + allNetworkPlayers.Length.ToString());
+      Debug.LogError("WTF, why is there an uneven number of players? There are: " + _networkPlayers.Length.ToString());
     }
 
-    int count = allNetworkPlayers.Length;
+    int count = _networkPlayers.Length;
 
     float segment = (Mathf.PI * 2) / count;
 
@@ -60,7 +59,7 @@ public class GameMasterBehaviour : NetworkBehaviour
 
     // Do a shuffle to make the teams randomized
     System.Random rnd = new System.Random();
-    NetworkPlayerBehaviour[] randomizedNetworkPlayers = allNetworkPlayers.OrderBy(x => rnd.Next()).ToArray();
+    NetworkPlayerBehaviour[] randomizedNetworkPlayers = _networkPlayers.OrderBy(x => rnd.Next()).ToArray();
 
     //Spawn an avatar for each player in a circular pattern
     foreach (NetworkPlayerBehaviour player in randomizedNetworkPlayers)
@@ -68,7 +67,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       float x = PlacementRadius * Mathf.Cos(segment * iteration);
       float y = PlacementRadius * Mathf.Sin(segment * iteration);
       var avatarBehaviour = DefaultPlayerAvatar.GetComponent<AvatarBehaviour>();
-      avatarBehaviour.startColor = player.avatarColor;
+      avatarBehaviour.startColor = player.playerData.playerColor;
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
 
@@ -132,7 +131,12 @@ public class GameMasterBehaviour : NetworkBehaviour
   {
     //Then we need to change the scene back to the main menu
     running = false;
+
+    
     yield return new WaitForSeconds(3.0f);
+
+    //Sync all the lobby player data
+    SyncPlayerDataToLobby();
     LobbyManager.s_Singleton.ServerReturnToLobby();
   }
 
@@ -141,6 +145,33 @@ public class GameMasterBehaviour : NetworkBehaviour
     foreach(var winner in avatars)
     {
       winner.IsWinner = true;
+    }
+  }
+
+  /// <summary>
+  /// Brute force sync of all the data back to the lobby player objects
+  /// </summary>
+  private void SyncPlayerDataToLobby()
+  {
+    NetworkLobbyPlayer[] allLobbyPlayers = new LobbyPlayer[0];
+    allLobbyPlayers = LobbyManager.s_Singleton.lobbySlots;
+
+    //Mostly here for confirming that the syncing behaviour works, but can be used for future things
+    foreach (var networkPlayer in _networkPlayers)
+    {
+      networkPlayer.playerData.numberOfGames++;
+    }
+
+    for (int i = 0; i < allLobbyPlayers.Length && allLobbyPlayers[i] != null; ++i)
+    {
+      foreach(var networkPlayer in _networkPlayers)
+      {
+        if((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)
+        {
+          (allLobbyPlayers[i] as LobbyPlayer).playerData = networkPlayer.playerData;
+          break;
+        }
+      }
     }
   }
 }
