@@ -11,10 +11,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   public KeyCode Down;
   public KeyCode Left;
   public KeyCode Right;
-
-  public string avatarName = "";
-  public Color avatarColor = Color.red;
-
+  
   /// <summary>
   /// This is only going to be set on the server side, the client is totally agnostic to this
   /// </summary>
@@ -23,6 +20,8 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   public AvatarBehaviour AssociatedAvatarBehaviour { get { return _associatedAvatarBehaviour; } set { _associatedAvatarBehaviour = value; Debug.Log("Assigned avatar!"); } }
 
   private NetworkIdentity _networkIdentity;
+
+  public PersistentPlayerData playerData = new PersistentPlayerData();
 
   /// <summary>
   /// This flag lets the client know that the server has it properly handled
