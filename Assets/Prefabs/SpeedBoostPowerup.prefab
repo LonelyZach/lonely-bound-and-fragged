@@ -37,15 +37,15 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4536789372353388}
-  - component: {fileID: 114350391463713386}
   - component: {fileID: 114423102739801242}
+  - component: {fileID: 114692862284240704}
   m_Layer: 0
   m_Name: MovementParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1882136748941492
 GameObject:
   m_ObjectHideFlags: 1
@@ -231,18 +231,6 @@ MonoBehaviour:
     i15: 122
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114350391463713386
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1770235647437614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9b83842f6393d46bf01454c0d28742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AvatarBehaviour: {fileID: 0}
 --- !u!114 &114423102739801242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,7 +274,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf1fb523fe3bf04f9aed9ed53cf5a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActivatingAvatarColor: {r: 0, g: 0, b: 0, a: 0}
   MovementParticles: {fileID: 1770235647437614}
+--- !u!114 &114692862284240704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1770235647437614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e9b83842f6393d46bf01454c0d28742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AvatarBehaviour: {fileID: 0}
 --- !u!198 &198865099449495984
 ParticleSystem:
   m_ObjectHideFlags: 1
