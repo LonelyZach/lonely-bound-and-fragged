@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9b83842f6393d46bf01454c0d28742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AvatarBehaviour: {fileID: 114416004389497466}
 --- !u!114 &114271589609288492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -348,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startColor: {r: 1, g: 0, b: 0, a: 1}
-  avatarName: GREGGY DKJKJKJKJKDJFKDSJFDLSFJDSLFJDSFJKSDFJDSLFJSDLFJSDFKJDS
+  avatarName: Player1
   MoveSpeed: 100
   PlayerForceAngleReadOnly: 0
   PlayerForceIntensityReadOnly: 0
