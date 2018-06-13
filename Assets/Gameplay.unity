@@ -332,7 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultTeam: {fileID: 1301173612703366, guid: 4bcbda6754361a945b3eee259de7b091,
     type: 2}
-  DefaultPlayerAvatar: {fileID: 1549802034697122, guid: 9f46037569dfaaf4aa2aaf43096d808e,
+  DefaultPlayerAvatar: {fileID: 1435210208523512, guid: 9f46037569dfaaf4aa2aaf43096d808e,
     type: 2}
   PlacementRadius: 3
 --- !u!4 &518315604

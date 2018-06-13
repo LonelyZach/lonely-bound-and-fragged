@@ -68,6 +68,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       float y = PlacementRadius * Mathf.Sin(segment * iteration);
       var avatarBehaviour = DefaultPlayerAvatar.GetComponent<AvatarBehaviour>();
       avatarBehaviour.startColor = player.playerData.playerColor;
+      avatarBehaviour.avatarName = player.playerData.playerName;
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
 
@@ -132,7 +133,7 @@ public class GameMasterBehaviour : NetworkBehaviour
     //Then we need to change the scene back to the main menu
     running = false;
 
-    
+
     yield return new WaitForSeconds(3.0f);
 
     //Sync all the lobby player data
@@ -175,4 +176,3 @@ public class GameMasterBehaviour : NetworkBehaviour
     }
   }
 }
-
