@@ -56,12 +56,17 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   {
     TimeToLive -= Time.deltaTime;
 
-    if(TimeToLive < 0.0f)
+    if(TimeToLive < 0.0f || !ActivatingAvatar.IsAlive)
     {
-      EndPowerupServer();
-      Rpc_EndPowerupClient();
-      NetworkServer.Destroy(gameObject);
+      End();
     }
+  }
+
+  private void End()
+  {
+    EndPowerupServer();
+    Rpc_EndPowerupClient();
+    NetworkServer.Destroy(gameObject);
   }
 
   protected abstract void StartPowerupServer();
