@@ -8,6 +8,8 @@ using System.Linq;
 /// </summary>
 public abstract class ActivePowerupBehaviour : NetworkBehaviour
 {
+  public float TimeToLive = 10.0f;
+
   public Color ActivatingAvatarColor;
 
   protected AvatarBehaviour ActivatingAvatar;
@@ -15,8 +17,6 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   private bool _initialized = false;
 
   private NetworkIdentity _networkIdentity;
-
-  private float TimeToLive = 10.0f;
 
   // Use this for initialization
   void Start()

@@ -6,8 +6,10 @@ using UnityEngine.Networking;
 public class LazerBehaviour : NetworkBehaviour
 {
 
+  public float LineDrawWidth = 0.1f;
+
   public int SpringDistance = 3;
-  public float SpringFrequency = 1;
+  public float SpringFrequency = 0.5f;
   public float SpringDampingRatio = 1.0f;
 
   public GameObject Avatar0;
@@ -75,6 +77,8 @@ public class LazerBehaviour : NetworkBehaviour
   private void Draw()
   {
     var renderer = gameObject.GetComponent<LineRenderer>();
+    renderer.startWidth = LineDrawWidth;
+    renderer.endWidth = LineDrawWidth;
     renderer.SetPosition(0, Avatar0Position);
     renderer.SetPosition(1, Avatar1Position);
   }
