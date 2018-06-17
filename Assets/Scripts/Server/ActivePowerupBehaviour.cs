@@ -65,7 +65,6 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   private void End()
   {
     EndPowerupServer();
-    Rpc_EndPowerupClient();
     NetworkServer.Destroy(gameObject);
   }
 
@@ -77,10 +76,10 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
 
   protected abstract void EndPowerupClient();
 
-  [ClientRpc]
-  public void Rpc_EndPowerupClient()
+  public override void OnNetworkDestroy()
   {
     EndPowerupClient();
+    base.OnNetworkDestroy();
   }
 
   [ClientRpc]
