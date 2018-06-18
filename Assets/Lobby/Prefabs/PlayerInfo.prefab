@@ -393,9 +393,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 70
+  m_MinHeight: 65
   m_PreferredWidth: -1
-  m_PreferredHeight: 70
+  m_PreferredHeight: 65
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -832,7 +832,7 @@ MonoBehaviour:
   ShowLobbyGUI: 0
   colorButton: {fileID: 11488840}
   nameInput: {fileID: 114633245802834726}
-  testField: {fileID: 114554807951321062}
+  gamesPlayed: {fileID: 114554807951321062}
   readyButton: {fileID: 11413860}
   waitingPlayerButton: {fileID: 11405868}
   removePlayerButton: {fileID: 11443358}
@@ -1121,7 +1121,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -85, y: -1}
-  m_SizeDelta: {x: 64, y: 64}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &22448096
 RectTransform:
@@ -1408,7 +1408,7 @@ GameObject:
   - component: {fileID: 222985515322661750}
   - component: {fileID: 114554807951321062}
   m_Layer: 5
-  m_Name: ScoreField
+  m_Name: GamesPlayedField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1677,7 +1677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 550, y: 0}
+  m_AnchoredPosition: {x: 600, y: 0}
   m_SizeDelta: {x: 200, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224308502081863434

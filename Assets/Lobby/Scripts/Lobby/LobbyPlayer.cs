@@ -20,7 +20,7 @@ namespace Prototype.NetworkLobby
 
     public Button colorButton;
     public InputField nameInput;
-    public Text testField;
+    public Text gamesPlayed;
     public Button readyButton;
     public Button waitingPlayerButton;
     public Button removePlayerButton;
@@ -75,6 +75,7 @@ namespace Prototype.NetworkLobby
       //will be created with the right value currently on server
       OnMyName(playerName);
       OnMyColor(playerColor);
+      gamesPlayed.text = playerData.numberOfGames.ToString();
     }
 
     public override void OnStartAuthority()
@@ -100,7 +101,7 @@ namespace Prototype.NetworkLobby
     void SetupOtherPlayer()
     {
       nameInput.interactable = false;
-      testField.text = "1000";
+      gamesPlayed.text = playerData.numberOfGames.ToString();
       removePlayerButton.interactable = NetworkServer.active;
 
       ChangeReadyButtonColor(NotReadyColor);
@@ -114,8 +115,8 @@ namespace Prototype.NetworkLobby
     void SetupLocalPlayer()
     {
       nameInput.interactable = true;
-      testField.text = "1000";
-nameInput.characterLimit = MAX_CHARACTER_LIMIT;
+      gamesPlayed.text = playerData.numberOfGames.ToString();
+      nameInput.characterLimit = MAX_CHARACTER_LIMIT;
       remoteIcone.gameObject.SetActive(false);
       localIcone.gameObject.SetActive(true);
 
