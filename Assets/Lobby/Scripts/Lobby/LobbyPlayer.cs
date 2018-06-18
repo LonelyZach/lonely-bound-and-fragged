@@ -18,6 +18,7 @@ namespace Prototype.NetworkLobby
 
     public Button colorButton;
     public InputField nameInput;
+    public Text testField;
     public Button readyButton;
     public Button waitingPlayerButton;
     public Button removePlayerButton;
@@ -97,6 +98,7 @@ namespace Prototype.NetworkLobby
     void SetupOtherPlayer()
     {
       nameInput.interactable = false;
+      testField.text = "1000";
       removePlayerButton.interactable = NetworkServer.active;
 
       ChangeReadyButtonColor(NotReadyColor);
@@ -110,6 +112,7 @@ namespace Prototype.NetworkLobby
     void SetupLocalPlayer()
     {
       nameInput.interactable = true;
+      testField.text = "1000";
 nameInput.characterLimit = MAX_CHARACTER_LIMIT;
       remoteIcone.gameObject.SetActive(false);
       localIcone.gameObject.SetActive(true);
@@ -311,6 +314,12 @@ nameInput.characterLimit = MAX_CHARACTER_LIMIT;
     public void CmdNameChanged(string name)
     {
       playerName = name;
+    }
+
+    [Command]
+    public void CmdTestValueChanged(string newValue)
+    {
+      //playerValue = newValue;
     }
 
     //Cleanup thing when get destroy (which happen when client kick or disconnect)
