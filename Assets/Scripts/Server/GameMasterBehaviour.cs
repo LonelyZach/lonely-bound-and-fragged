@@ -163,8 +163,15 @@ public class GameMasterBehaviour : NetworkBehaviour
       networkPlayer.playerData.numberOfGames++;
     }
 
-    for (int i = 0; i < allLobbyPlayers.Length && allLobbyPlayers[i] != null; ++i)
+    for (int i = 0; i < allLobbyPlayers.Length; ++i)
     {
+      //This can actually happen, where some elements just get null entries even though it isn't the end of the list
+      //Therefore, this is necessary to ensure a proper transfer of data back to the lobby
+      if(allLobbyPlayers[i] == null)
+      {
+        continue;
+      }
+
       foreach(var networkPlayer in _networkPlayers)
       {
         if((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)

@@ -375,7 +375,7 @@ Prefab:
     - target: {fileID: 114541892238915322, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_MinHeight
-      value: 80
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f0a348720825d64f820a046359d49a3, type: 2}

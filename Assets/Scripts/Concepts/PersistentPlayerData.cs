@@ -17,4 +17,9 @@ public struct PersistentPlayerData
     playerName = name;
     numberOfGames = 0;
   }
+
+  public override string ToString()
+  {
+    return "Id: " + playerId + " Name: " + playerName;
+  }
 }
