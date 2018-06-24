@@ -3,23 +3,25 @@ using System.Collections;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Rigidbody2D), typeof(EdgeCollider2D), typeof(LineRenderer))]
-public class EllipseEdgeCollider2D : MonoBehaviour
+public class RoundedRectangleEdgeCollider2D : MonoBehaviour
 {
-  public float XRadius = 1.0f;
-  public float YRadius = 1.0f;
+  public float SuperellipseFactor = 4.0f;
+  public float Width = 0f;
+  public float Height = 0f;
   public int NumPoints = 32;
 
   EdgeCollider2D EdgeCollider;
   LineRenderer lineRenderer;
-  float currentXRadius = 0.0f;
-  float currentYRadius = 0.0f;
+  float currentSuperellipseFactor = 0.0f;
+  float currentWidth = 0.0f;
+  float currentHeight = 0.0f;
 
   /// <summary>
   /// Start this instance.
   /// </summary>
   void Start()
   {
-    CreateEllipse();
+    CreateRoundedRectangle();
   }
 
   /// <summary>
@@ -28,17 +30,16 @@ public class EllipseEdgeCollider2D : MonoBehaviour
   void Update()
   {
     // If the radius or point count has changed, update the circle
-    if (NumPoints != EdgeCollider.pointCount || NumPoints != lineRenderer.positionCount || 
-          XRadius != currentXRadius || YRadius != currentYRadius)
+    if (NumPoints != EdgeCollider.pointCount || currentSuperellipseFactor != SuperellipseFactor || currentWidth != Width || currentHeight != Height)
     {
-      CreateEllipse();
+      CreateRoundedRectangle();
     }
   }
 
   /// <summary>
-  /// Creates the circle.
+  /// Creates the rounded rectangle.
   /// </summary>
-  void CreateEllipse()
+  void CreateRoundedRectangle()
   {
     Vector2[] edgePoints = new Vector2[NumPoints + 1];
     Vector3[] drawPoints = new Vector3[NumPoints + 1];
@@ -50,7 +51,9 @@ public class EllipseEdgeCollider2D : MonoBehaviour
     for (int loop = 0; loop <= NumPoints; loop++)
     {
       float angle = (Mathf.PI * 2.0f / NumPoints) * loop;
-      var newVector = new Vector2(XRadius * Mathf.Cos(angle), YRadius * Mathf.Sin(angle));
+      var newVector = new Vector2(Mathf.Pow(Mathf.Abs(Mathf.Cos(angle)), 2f / SuperellipseFactor) * Width * Mathf.Sign(Mathf.Cos(angle)),
+                                  Mathf.Pow(Mathf.Abs(Mathf.Sin(angle)), 2f / SuperellipseFactor) * Height * Mathf.Sign(Mathf.Sin(angle)));
+
       edgePoints[loop] = newVector;
       drawPoints[loop] = new Vector3(newVector.x + transform.position.x, newVector.y + transform.position.y);
     }
@@ -58,8 +61,6 @@ public class EllipseEdgeCollider2D : MonoBehaviour
     EdgeCollider.points = edgePoints;
     lineRenderer.positionCount = NumPoints;
     lineRenderer.SetPositions(drawPoints);
-    lineRenderer.material.color = Color.white;
-    currentXRadius = XRadius;
-    currentYRadius = YRadius;
+    currentSuperellipseFactor = SuperellipseFactor;
   }
 }

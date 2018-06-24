@@ -12,6 +12,8 @@ public class GameMasterBehaviour : NetworkBehaviour
 
   public GameObject DefaultPlayerAvatar;
 
+  public GameObject Scoreboard;
+
   public int PlacementRadius;
 
   private List<TeamBehaviour> _teamBehaviorList = new List<TeamBehaviour>();
@@ -36,6 +38,8 @@ public class GameMasterBehaviour : NetworkBehaviour
   void Initialize()
   {
     int numberOfCreatedPlayers = 0;
+
+    var scoreboardBehaviour = Scoreboard.GetComponent<ScoreboardBehaviour>();
 
     _networkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
     numberOfCreatedPlayers = _networkPlayers.Length;
@@ -77,6 +81,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       _avatars.Add(newAvatar);
       player.IsPlayerReady = true;
 
+      scoreboardBehaviour.AddPlayer(player);
       ++iteration;
     }
 
