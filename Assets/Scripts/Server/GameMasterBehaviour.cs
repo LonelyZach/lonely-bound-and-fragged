@@ -38,9 +38,7 @@ public class GameMasterBehaviour : NetworkBehaviour
   void Initialize()
   {
     int numberOfCreatedPlayers = 0;
-
-    var scoreboardBehaviour = Scoreboard.GetComponent<ScoreboardBehaviour>();
-
+    
     _networkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
     numberOfCreatedPlayers = _networkPlayers.Length;
 
@@ -81,7 +79,6 @@ public class GameMasterBehaviour : NetworkBehaviour
       _avatars.Add(newAvatar);
       player.IsPlayerReady = true;
 
-      scoreboardBehaviour.AddPlayer(player);
       ++iteration;
     }
 
@@ -139,11 +136,11 @@ public class GameMasterBehaviour : NetworkBehaviour
     //Then we need to change the scene back to the main menu
     running = false;
 
-
-    yield return new WaitForSeconds(3.0f);
-
     //Sync all the lobby player data
     SyncPlayerDataToLobby();
+    ShowScoreboard();
+    yield return new WaitForSeconds(5.0f);
+
     LobbyManager.s_Singleton.ServerReturnToLobby();
   }
 
@@ -152,6 +149,20 @@ public class GameMasterBehaviour : NetworkBehaviour
     foreach(var winner in avatars)
     {
       winner.IsWinner = true;
+    }
+  }
+
+  /// <summary>
+  /// This function instantiates a scoreboard and displays it
+  /// </summary>
+  private void ShowScoreboard()
+  {
+    GameObject scoreboard = (GameObject)Instantiate(Scoreboard);
+    var scoreboardBehaviour = scoreboard.GetComponent<ScoreboardBehaviour>();
+    var playersByRank = _networkPlayers.OrderBy(o => o.playerData.rank).ToList();
+    foreach (var player in playersByRank)
+    {
+      scoreboardBehaviour.AddPlayer(player);
     }
   }
 
@@ -174,15 +185,13 @@ public class GameMasterBehaviour : NetworkBehaviour
     //Update the rankings
     List<PersistentPlayerData> playerDataList = _networkPlayers.Select(data => data.playerData).ToList();
     PersistentPlayerData.SetRanks(playerDataList);
-
     foreach (var networkPlayer in _networkPlayers)
     {
       //Update with the rank of the set rank function. This is done like this because of how the ranks are assigned in the earlier function
       networkPlayer.playerData.rank = playerDataList.Single(pd => pd.playerId == networkPlayer.playerData.playerId).rank;
     }
 
-
-
+    //Sync the data back to the lobby players
     for (int i = 0; i < allLobbyPlayers.Length; ++i)
     {
       //This can actually happen, where some elements just get null entries even though it isn't the end of the list
