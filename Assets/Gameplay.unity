@@ -294,8 +294,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 676a74bea3b31694db862173b8d3d911, type: 3}
   - {fileID: 21300000, guid: 676a74bea3b31694db862173b8d3d911, type: 3}
   ActivePowerupPrefabs:
-  - {fileID: 1050911294067882, guid: 78bd48960ab37ad438622cbd8b20698a, type: 2}
   - {fileID: 1050911294067882, guid: 60faab472da3ca649a971bd7200e5a7a, type: 2}
+  - {fileID: 1050911294067882, guid: 78bd48960ab37ad438622cbd8b20698a, type: 2}
   - {fileID: 1050911294067882, guid: 8093f57542ae67b458eeb7a7a66d253e, type: 2}
   - {fileID: 1050911294067882, guid: 78bd48960ab37ad438622cbd8b20698a, type: 2}
   - {fileID: 1050911294067882, guid: 60faab472da3ca649a971bd7200e5a7a, type: 2}
