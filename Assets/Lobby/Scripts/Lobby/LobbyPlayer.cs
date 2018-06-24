@@ -21,6 +21,7 @@ namespace Prototype.NetworkLobby
     public Button colorButton;
     public InputField nameInput;
     public Text gamesPlayed;
+    public Text killsScored;
     public Button readyButton;
     public Button waitingPlayerButton;
     public Button removePlayerButton;
@@ -48,6 +49,11 @@ namespace Prototype.NetworkLobby
     //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
     //static Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
+    private void UpdateTextFields()
+    {
+      gamesPlayed.text = playerData.numberOfGames.ToString();
+      killsScored.text = playerData.kills.ToString();
+    }
 
     public override void OnClientEnterLobby()
     {
@@ -75,7 +81,7 @@ namespace Prototype.NetworkLobby
       //will be created with the right value currently on server
       OnMyName(playerName);
       OnMyColor(playerColor);
-      gamesPlayed.text = playerData.numberOfGames.ToString();
+      UpdateTextFields();
     }
 
     public override void OnStartAuthority()
@@ -101,7 +107,7 @@ namespace Prototype.NetworkLobby
     void SetupOtherPlayer()
     {
       nameInput.interactable = false;
-      gamesPlayed.text = playerData.numberOfGames.ToString();
+      UpdateTextFields();
       removePlayerButton.interactable = NetworkServer.active;
 
       ChangeReadyButtonColor(NotReadyColor);
@@ -115,7 +121,7 @@ namespace Prototype.NetworkLobby
     void SetupLocalPlayer()
     {
       nameInput.interactable = true;
-      gamesPlayed.text = playerData.numberOfGames.ToString();
+      UpdateTextFields();
       nameInput.characterLimit = MAX_CHARACTER_LIMIT;
       remoteIcone.gameObject.SetActive(false);
       localIcone.gameObject.SetActive(true);

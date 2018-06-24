@@ -69,6 +69,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       var avatarBehaviour = DefaultPlayerAvatar.GetComponent<AvatarBehaviour>();
       avatarBehaviour.startColor = player.playerData.playerColor;
       avatarBehaviour.avatarName = player.playerData.playerName;
+      
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
 
@@ -161,6 +162,7 @@ public class GameMasterBehaviour : NetworkBehaviour
     foreach (var networkPlayer in _networkPlayers)
     {
       networkPlayer.playerData.numberOfGames++;
+      networkPlayer.playerData.kills += networkPlayer.AssociatedAvatarBehaviour.Kills;
     }
 
     for (int i = 0; i < allLobbyPlayers.Length; ++i)

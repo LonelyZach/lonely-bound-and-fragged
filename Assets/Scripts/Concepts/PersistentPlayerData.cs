@@ -7,6 +7,7 @@ public struct PersistentPlayerData
   public Color playerColor;
   public string playerName;
   public int numberOfGames;
+  public int kills;
 
   public PersistentPlayerData(Color color, string name)
   {
@@ -16,6 +17,7 @@ public struct PersistentPlayerData
     playerColor = color;
     playerName = name;
     numberOfGames = 0;
+    kills = 0;
   }
 
   public override string ToString()

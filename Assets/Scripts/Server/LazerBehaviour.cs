@@ -109,7 +109,12 @@ public class LazerBehaviour : NetworkBehaviour
   {
     foreach (var avatar in FindAvatarsInLazer())
     {
-      avatar.Kill();
+      if (avatar.IsAlive)
+      {
+        avatar.Kill();
+        Avatar0.GetComponent<AvatarBehaviour>().ScoredKill();
+        Avatar1.GetComponent<AvatarBehaviour>().ScoredKill();
+      }
     }
   }
 
