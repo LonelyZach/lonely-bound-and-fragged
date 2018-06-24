@@ -158,13 +158,25 @@ public class GameMasterBehaviour : NetworkBehaviour
     NetworkLobbyPlayer[] allLobbyPlayers = new LobbyPlayer[0];
     allLobbyPlayers = LobbyManager.s_Singleton.lobbySlots;
 
-    //Mostly here for confirming that the syncing behaviour works, but can be used for future things
+    // Update all the tracked data. This must be done before the ranking calculation
     foreach (var networkPlayer in _networkPlayers)
     {
       networkPlayer.playerData.numberOfGames++;
       networkPlayer.playerData.kills += networkPlayer.AssociatedAvatarBehaviour.Kills;
       networkPlayer.playerData.wins += networkPlayer.AssociatedAvatarBehaviour.IsWinner ? 1 : 0;
     }
+
+    //Update the rankings
+    List<PersistentPlayerData> playerDataList = _networkPlayers.Select(data => data.playerData).ToList();
+    PersistentPlayerData.SetRanks(playerDataList);
+
+    foreach (var networkPlayer in _networkPlayers)
+    {
+      //Update with the rank of the set rank function. This is done like this because of how the ranks are assigned in the earlier function
+      networkPlayer.playerData.rank = playerDataList.Single(pd => pd.playerId == networkPlayer.playerData.playerId).rank;
+    }
+
+
 
     for (int i = 0; i < allLobbyPlayers.Length; ++i)
     {
@@ -177,7 +189,7 @@ public class GameMasterBehaviour : NetworkBehaviour
 
       foreach(var networkPlayer in _networkPlayers)
       {
-        if((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)
+        if ((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)
         {
           (allLobbyPlayers[i] as LobbyPlayer).playerData = networkPlayer.playerData;
           break;
