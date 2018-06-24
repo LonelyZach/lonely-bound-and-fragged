@@ -173,4 +173,9 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
     intensity = Mathf.Clamp(intensity, 0.0f, 1.0f);
     _associatedAvatarBehaviour.SetPlayerDrivenMovement(angleOfForce, intensity);
   }
+
+  public override int GetHashCode()
+  {
+    return playerData.playerId;
+  }
 }

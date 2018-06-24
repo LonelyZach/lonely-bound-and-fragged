@@ -20,6 +20,10 @@ namespace Prototype.NetworkLobby
 
     public Button colorButton;
     public InputField nameInput;
+    public Text gamesPlayed;
+    public Text killsScored;
+    public Text wins;
+    public Text rank;
     public Button readyButton;
     public Button waitingPlayerButton;
     public Button removePlayerButton;
@@ -47,6 +51,13 @@ namespace Prototype.NetworkLobby
     //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
     //static Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
+    private void UpdateTextFields()
+    {
+      gamesPlayed.text = playerData.numberOfGames.ToString();
+      killsScored.text = playerData.kills.ToString();
+      wins.text = playerData.wins.ToString();
+      rank.text = playerData.rank == 0 ? "" : playerData.rank.ToString();
+    }
 
     public override void OnClientEnterLobby()
     {
@@ -74,6 +85,7 @@ namespace Prototype.NetworkLobby
       //will be created with the right value currently on server
       OnMyName(playerName);
       OnMyColor(playerColor);
+      UpdateTextFields();
     }
 
     public override void OnStartAuthority()
@@ -99,6 +111,7 @@ namespace Prototype.NetworkLobby
     void SetupOtherPlayer()
     {
       nameInput.interactable = false;
+      UpdateTextFields();
       removePlayerButton.interactable = NetworkServer.active;
 
       ChangeReadyButtonColor(NotReadyColor);
@@ -112,7 +125,8 @@ namespace Prototype.NetworkLobby
     void SetupLocalPlayer()
     {
       nameInput.interactable = true;
-nameInput.characterLimit = MAX_CHARACTER_LIMIT;
+      UpdateTextFields();
+      nameInput.characterLimit = MAX_CHARACTER_LIMIT;
       remoteIcone.gameObject.SetActive(false);
       localIcone.gameObject.SetActive(true);
 
@@ -313,6 +327,12 @@ nameInput.characterLimit = MAX_CHARACTER_LIMIT;
     public void CmdNameChanged(string name)
     {
       playerName = name;
+    }
+
+    [Command]
+    public void CmdTestValueChanged(string newValue)
+    {
+      //playerValue = newValue;
     }
 
     //Cleanup thing when get destroy (which happen when client kick or disconnect)
