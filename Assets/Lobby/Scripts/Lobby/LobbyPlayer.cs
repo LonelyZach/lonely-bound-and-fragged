@@ -22,6 +22,7 @@ namespace Prototype.NetworkLobby
     public InputField nameInput;
     public Text gamesPlayed;
     public Text killsScored;
+    public Text wins;
     public Button readyButton;
     public Button waitingPlayerButton;
     public Button removePlayerButton;
@@ -53,6 +54,7 @@ namespace Prototype.NetworkLobby
     {
       gamesPlayed.text = playerData.numberOfGames.ToString();
       killsScored.text = playerData.kills.ToString();
+      wins.text = playerData.wins.ToString();
     }
 
     public override void OnClientEnterLobby()

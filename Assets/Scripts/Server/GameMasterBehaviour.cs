@@ -163,6 +163,7 @@ public class GameMasterBehaviour : NetworkBehaviour
     {
       networkPlayer.playerData.numberOfGames++;
       networkPlayer.playerData.kills += networkPlayer.AssociatedAvatarBehaviour.Kills;
+      networkPlayer.playerData.wins += networkPlayer.AssociatedAvatarBehaviour.IsWinner ? 1 : 0;
     }
 
     for (int i = 0; i < allLobbyPlayers.Length; ++i)
