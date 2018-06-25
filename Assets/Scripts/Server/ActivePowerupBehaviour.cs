@@ -8,6 +8,8 @@ using System.Linq;
 /// </summary>
 public abstract class ActivePowerupBehaviour : NetworkBehaviour
 {
+  public float TimeToLive = 10.0f;
+
   public Color ActivatingAvatarColor;
 
   protected AvatarBehaviour ActivatingAvatar;
@@ -15,8 +17,6 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   private bool _initialized = false;
 
   private NetworkIdentity _networkIdentity;
-
-  private float TimeToLive = 10.0f;
 
   // Use this for initialization
   void Start()
@@ -65,7 +65,6 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   private void End()
   {
     EndPowerupServer();
-    Rpc_EndPowerupClient();
     NetworkServer.Destroy(gameObject);
   }
 
@@ -77,10 +76,10 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
 
   protected abstract void EndPowerupClient();
 
-  [ClientRpc]
-  public void Rpc_EndPowerupClient()
+  public override void OnNetworkDestroy()
   {
     EndPowerupClient();
+    base.OnNetworkDestroy();
   }
 
   [ClientRpc]

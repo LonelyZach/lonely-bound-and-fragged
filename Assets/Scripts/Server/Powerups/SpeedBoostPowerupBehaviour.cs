@@ -18,11 +18,11 @@ public class SpeedBoostPowerupBehaviour : ActivePowerupBehaviour {
 
   protected override void StartPowerupServer()
   {
-    ActivatingAvatar.MoveSpeed = ActivatingAvatar.MoveSpeed * 2;
+    ActivatingAvatar.MoveSpeed = ActivatingAvatar.MoveSpeed += 1.0f;
   }
 
   protected override void EndPowerupServer()
   {
-    ActivatingAvatar.MoveSpeed = ActivatingAvatar.MoveSpeed / 2;
+    ActivatingAvatar.MoveSpeed = ActivatingAvatar.MoveSpeed -= 1.0f;
   }
 }
