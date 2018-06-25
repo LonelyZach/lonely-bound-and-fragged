@@ -8,8 +8,12 @@ public class AvatarBehaviour : NetworkBehaviour {
 
   [SyncVar]
   public Color startColor;
+
+  [SyncVar]
   public string avatarName;
 
+  private int _kills = 0;
+  public int Kills {  get { return _kills; } }
 
   public float MoveSpeed = 100.0f;
 
@@ -115,6 +119,12 @@ public class AvatarBehaviour : NetworkBehaviour {
   {
     gameObject.transform.Find("CrownSprite").gameObject.SetActive(false);
     gameObject.transform.Find("TarnishedCrownSprite").gameObject.SetActive(true);
+  }
+
+  public void ScoredKill()
+  {
+    _kills++;
+    Debug.Log(avatarName + " got a kill! Now has " + _kills + " this game!");
   }
 
   [ClientRpc]

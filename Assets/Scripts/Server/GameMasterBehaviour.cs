@@ -12,6 +12,8 @@ public class GameMasterBehaviour : NetworkBehaviour
 
   public GameObject DefaultPlayerAvatar;
 
+  public GameObject Scoreboard;
+
   public int PlacementRadius;
 
   private List<TeamBehaviour> _teamBehaviorList = new List<TeamBehaviour>();
@@ -36,7 +38,7 @@ public class GameMasterBehaviour : NetworkBehaviour
   void Initialize()
   {
     int numberOfCreatedPlayers = 0;
-
+    
     _networkPlayers = GameObject.FindObjectsOfType<NetworkPlayerBehaviour>();
     numberOfCreatedPlayers = _networkPlayers.Length;
 
@@ -69,6 +71,7 @@ public class GameMasterBehaviour : NetworkBehaviour
       var avatarBehaviour = DefaultPlayerAvatar.GetComponent<AvatarBehaviour>();
       avatarBehaviour.startColor = player.playerData.playerColor;
       avatarBehaviour.avatarName = player.playerData.playerName;
+      
       GameObject newAvatar = (GameObject)Instantiate(DefaultPlayerAvatar, new Vector3(x, y), Quaternion.identity);
       NetworkServer.Spawn(newAvatar);
 
@@ -133,11 +136,11 @@ public class GameMasterBehaviour : NetworkBehaviour
     //Then we need to change the scene back to the main menu
     running = false;
 
-
-    yield return new WaitForSeconds(3.0f);
-
     //Sync all the lobby player data
     SyncPlayerDataToLobby();
+    ShowScoreboard();
+    yield return new WaitForSeconds(5.0f);
+
     LobbyManager.s_Singleton.ServerReturnToLobby();
   }
 
@@ -150,6 +153,20 @@ public class GameMasterBehaviour : NetworkBehaviour
   }
 
   /// <summary>
+  /// This function instantiates a scoreboard and displays it
+  /// </summary>
+  private void ShowScoreboard()
+  {
+    GameObject scoreboard = (GameObject)Instantiate(Scoreboard);
+    var scoreboardBehaviour = scoreboard.GetComponent<ScoreboardBehaviour>();
+    var playersByRank = _networkPlayers.OrderBy(o => o.playerData.rank).ToList();
+    foreach (var player in playersByRank)
+    {
+      scoreboardBehaviour.AddPlayer(player);
+    }
+  }
+
+  /// <summary>
   /// Brute force sync of all the data back to the lobby player objects
   /// </summary>
   private void SyncPlayerDataToLobby()
@@ -157,17 +174,36 @@ public class GameMasterBehaviour : NetworkBehaviour
     NetworkLobbyPlayer[] allLobbyPlayers = new LobbyPlayer[0];
     allLobbyPlayers = LobbyManager.s_Singleton.lobbySlots;
 
-    //Mostly here for confirming that the syncing behaviour works, but can be used for future things
+    // Update all the tracked data. This must be done before the ranking calculation
     foreach (var networkPlayer in _networkPlayers)
     {
       networkPlayer.playerData.numberOfGames++;
+      networkPlayer.playerData.kills += networkPlayer.AssociatedAvatarBehaviour.Kills;
+      networkPlayer.playerData.wins += networkPlayer.AssociatedAvatarBehaviour.IsWinner ? 1 : 0;
     }
 
-    for (int i = 0; i < allLobbyPlayers.Length && allLobbyPlayers[i] != null; ++i)
+    //Update the rankings
+    List<PersistentPlayerData> playerDataList = _networkPlayers.Select(data => data.playerData).ToList();
+    PersistentPlayerData.SetRanks(playerDataList);
+    foreach (var networkPlayer in _networkPlayers)
     {
+      //Update with the rank of the set rank function. This is done like this because of how the ranks are assigned in the earlier function
+      networkPlayer.playerData.rank = playerDataList.Single(pd => pd.playerId == networkPlayer.playerData.playerId).rank;
+    }
+
+    //Sync the data back to the lobby players
+    for (int i = 0; i < allLobbyPlayers.Length; ++i)
+    {
+      //This can actually happen, where some elements just get null entries even though it isn't the end of the list
+      //Therefore, this is necessary to ensure a proper transfer of data back to the lobby
+      if(allLobbyPlayers[i] == null)
+      {
+        continue;
+      }
+
       foreach(var networkPlayer in _networkPlayers)
       {
-        if((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)
+        if ((allLobbyPlayers[i] as LobbyPlayer).playerData.playerId == networkPlayer.playerData.playerId)
         {
           (allLobbyPlayers[i] as LobbyPlayer).playerData = networkPlayer.playerData;
           break;

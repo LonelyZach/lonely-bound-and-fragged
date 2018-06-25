@@ -306,7 +306,7 @@ Prefab:
     - target: {fileID: 114058541867446622, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_Text
-      value: 127.0.0.1
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
@@ -316,7 +316,7 @@ Prefab:
     - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 1857122265365456, guid: 5f0a348720825d64f820a046359d49a3, type: 2}
       propertyPath: m_IsActive
@@ -345,37 +345,21 @@ Prefab:
     - target: {fileID: 224319088642537580, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -40
+      value: -32.5
       objectReference: {fileID: 0}
     - target: {fileID: 224195512833362542, guid: 5f0a348720825d64f820a046359d49a3,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 65
       objectReference: {fileID: 0}
-    - target: {fileID: 224775475156562854, guid: 5f0a348720825d64f820a046359d49a3,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224319088642537580, guid: 5f0a348720825d64f820a046359d49a3,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.0000060365605
-      objectReference: {fileID: 0}
-    - target: {fileID: 114847817373226702, guid: 5f0a348720825d64f820a046359d49a3,
-        type: 2}
-      propertyPath: m_ScrollSensitivity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114541892238915322, guid: 5f0a348720825d64f820a046359d49a3,
-        type: 2}
-      propertyPath: m_MinHeight
-      value: 80
+    - target: {fileID: 1222683539476064, guid: 5f0a348720825d64f820a046359d49a3, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f0a348720825d64f820a046359d49a3, type: 2}

@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.Types;
 using UnityEngine.Networking.Match;
 using System.Collections;
-
+using System.Linq;
 
 namespace Prototype.NetworkLobby
 {
@@ -40,8 +40,6 @@ namespace Prototype.NetworkLobby
 
     //Client numPlayers from NetworkManager is always 0, so we count (throught connect/destroy in LobbyPlayer) the number
     //of players, so that even client know how many player there is.
-    [HideInInspector]
-    public int _playerNumber = 0;
 
     //used to disconnect a client properly when exiting the matchmaker
     [HideInInspector]
@@ -74,9 +72,11 @@ namespace Prototype.NetworkLobby
         if (topPanel.isInGame)
         {
           ChangeTo(lobbyPanel);
+
+          var firstValidPlayerController = conn.playerControllers.First(t => t.gameObject != null);
           if (_isMatchmaking)
           {
-            if (conn.playerControllers[0].unetView.isServer)
+            if (firstValidPlayerController.unetView.isServer)
             {
               backDelegate = StopHostClbk;
             }
@@ -87,7 +87,8 @@ namespace Prototype.NetworkLobby
           }
           else
           {
-            if (conn.playerControllers[0].unetView.isClient)
+            ;
+            if (firstValidPlayerController.unetView.isClient)
             {
               backDelegate = StopHostClbk;
             }
@@ -260,13 +261,11 @@ namespace Prototype.NetworkLobby
     //allow to handle the (+) button to add/remove player
     public void OnPlayersNumberModified(int count)
     {
-      _playerNumber += count;
-
       int localPlayerCount = 0;
       foreach (PlayerController p in ClientScene.localPlayers)
         localPlayerCount += (p == null || p.playerControllerId == -1) ? 0 : 1;
 
-      addPlayerButton.SetActive(localPlayerCount < maxPlayersPerConnection && _playerNumber < maxPlayers);
+      addPlayerButton.SetActive(localPlayerCount < maxPlayersPerConnection && LobbyManager.s_Singleton.numPlayers < maxPlayers);
     }
 
     // ----------------- Server callbacks ------------------
