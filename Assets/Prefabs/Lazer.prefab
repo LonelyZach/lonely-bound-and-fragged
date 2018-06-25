@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b10803c9d37e94a8700b89ce3ae8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LineDrawWidth: 0.1
   SpringDistance: 3
   SpringFrequency: 0.5
   SpringDampingRatio: 0.1
