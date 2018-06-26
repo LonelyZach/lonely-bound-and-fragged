@@ -41,7 +41,7 @@ public class PowerupBehaviour : NetworkBehaviour
     _triggered = true;
 
     var activePowerup = (GameObject)Instantiate(ActivePowerupPrefab, new Vector3(0, 0), Quaternion.identity);
-    activePowerup.GetComponent<ActivePowerupBehaviour>().ActivatingAvatarColor = collidingAvatar.startColor;
+    activePowerup.GetComponent<ActivePowerupBehaviour>().ActivatingAvatarId = collidingAvatar.Id;
     NetworkServer.Spawn(activePowerup);
 
     NetworkServer.Destroy(gameObject);

@@ -5,6 +5,10 @@ using UnityEngine.Networking;
 
 public class LazerBehaviour : NetworkBehaviour
 {
+  private static int NextLazerId = 0;
+
+  [SyncVar]
+  public int Id;
 
   public float LineDrawWidth = 0.1f;
 
@@ -15,6 +19,11 @@ public class LazerBehaviour : NetworkBehaviour
   public GameObject Avatar0;
   public GameObject Avatar1;
   private NetworkIdentity _networkIdentity;
+
+  [SyncVar]
+  public float Avatar0_id;
+  [SyncVar]
+  public float Avatar1_id;
 
   #region Client variables for local drawing
   //Individual x and y because that's how SyncVar works
@@ -38,6 +47,11 @@ public class LazerBehaviour : NetworkBehaviour
   void Start()
   {
     _networkIdentity = GetComponent<NetworkIdentity>();
+
+    if (_networkIdentity.isServer)
+    {
+      Id = NextLazerId++;
+    }
   }
 
   // Update is called once per frame
@@ -92,6 +106,8 @@ public class LazerBehaviour : NetworkBehaviour
   {
     Avatar0 = avatar0;
     Avatar1 = avatar1;
+    Avatar0_id = avatar0.GetComponent<AvatarBehaviour>().Id;
+    Avatar1_id = avatar1.GetComponent<AvatarBehaviour>().Id;
 
     // Spring joints need to be on one of the objects being joined, so, we'll create it here.
     CreateSpringJoint();
