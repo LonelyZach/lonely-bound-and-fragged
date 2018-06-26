@@ -2,9 +2,12 @@
 using UnityEngine.Networking;
 
 public class AvatarBehaviour : NetworkBehaviour {
-
+  private static int NextAvatarId;
 
   private Vector2 _startPositon;
+
+  [SyncVar]
+  public int Id;
 
   [SyncVar]
   public Color startColor;
@@ -34,11 +37,20 @@ public class AvatarBehaviour : NetworkBehaviour {
   [SyncVar]
   private bool _alive = true;
 
+  private NetworkIdentity _networkIdentity;
+
   void Start()
   {
     _startPositon = gameObject.transform.position;
     gameObject.GetComponent<SpriteRenderer>().color = startColor;
     gameObject.transform.Find("Nameplate").gameObject.GetComponent<TextMesh>().text = avatarName;
+
+    _networkIdentity = GetComponent<NetworkIdentity>();
+
+    if (_networkIdentity.isServer)
+    {
+      Id = NextAvatarId++;
+    }
   }
 
   private void Update()
