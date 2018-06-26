@@ -35,7 +35,6 @@ public class StretchyLazerPowerupBehaviour : ActivePowerupBehaviour {
 
   private LazerBehaviour FindLazerInScene()
   {
-    return FindObjectsOfType<LazerBehaviour>().Single(
-      x => x.Avatar0.GetComponent<AvatarBehaviour>() == ActivatingAvatar || x.Avatar1.GetComponent<AvatarBehaviour>() == ActivatingAvatar);
+    return FindObjectsOfType<LazerBehaviour>().Single(x => x.Avatar0_id == ActivatingAvatarId || x.Avatar1_id == ActivatingAvatarId);
   }
 }

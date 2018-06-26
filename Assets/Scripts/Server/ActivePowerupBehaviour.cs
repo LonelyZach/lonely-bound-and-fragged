@@ -10,11 +10,10 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
 {
   public float TimeToLive = 10.0f;
 
-  public Color ActivatingAvatarColor;
+  [SyncVar]
+  public int ActivatingAvatarId;
 
   protected AvatarBehaviour ActivatingAvatar;
-
-  private bool _initialized = false;
 
   private NetworkIdentity _networkIdentity;
 
@@ -22,6 +21,7 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   void Start()
   {
     _networkIdentity = GetComponent<NetworkIdentity>();
+
     Initialize();
   }
 
@@ -41,10 +41,16 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
 
   public void Initialize()
   {
-    _initialized = true;
-    ActivatingAvatar = FindObjectsOfType<AvatarBehaviour>().Single(x => x.startColor == ActivatingAvatarColor);
-    StartPowerupServer();
-    Rpc_StartPowerupClient();
+    ActivatingAvatar = FindObjectsOfType<AvatarBehaviour>().Single(x => x.Id == ActivatingAvatarId);
+
+    if (_networkIdentity.isServer)
+    {
+      StartPowerupServer();
+    }
+    if(_networkIdentity.isClient)
+    {
+      StartPowerupClient();
+    }
   }
 
   private void ClientUpdate()
@@ -80,11 +86,5 @@ public abstract class ActivePowerupBehaviour : NetworkBehaviour
   {
     EndPowerupClient();
     base.OnNetworkDestroy();
-  }
-
-  [ClientRpc]
-  public void Rpc_StartPowerupClient()
-  {
-    StartPowerupClient();
   }
 }
