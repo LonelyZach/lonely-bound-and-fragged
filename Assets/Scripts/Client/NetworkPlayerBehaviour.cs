@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkPlayerBehaviour : NetworkBehaviour {
+public class NetworkPlayerBehaviour : NetworkBehaviour
+{
 
   public string HorizontalJoystickAxisName;
   public string VerticalJoystickAxisName;
@@ -16,7 +17,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   /// This is only going to be set on the server side, the client is totally agnostic to this
   /// </summary>
   private AvatarBehaviour _associatedAvatarBehaviour;
-    
+
   public AvatarBehaviour AssociatedAvatarBehaviour { get { return _associatedAvatarBehaviour; } set { _associatedAvatarBehaviour = value; Debug.Log("Assigned avatar!"); } }
 
   private NetworkIdentity _networkIdentity;
@@ -29,7 +30,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   [SyncVar]
   private bool isPlayerReady = false;
 
-  public bool IsPlayerReady { get { return isPlayerReady; }  set { isPlayerReady = value; } }
+  public bool IsPlayerReady { get { return isPlayerReady; } set { isPlayerReady = value; } }
 
   private void Start()
   {
@@ -39,7 +40,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
   // Update is called once per frame
   void Update()
   {
-    if(!_networkIdentity.hasAuthority || !IsPlayerReady)
+    if (!_networkIdentity.hasAuthority || !IsPlayerReady)
     {
       return;
     }
@@ -47,13 +48,29 @@ public class NetworkPlayerBehaviour : NetworkBehaviour {
     //Keyboard > joystick. Try this first
     var keyboardForce = GetKeyboardAngleOfForce();
 
-    if(!float.IsNaN(keyboardForce))
+    if (!float.IsNaN(keyboardForce))
     {
       Cmd_SetPlayerDrivenMovement(keyboardForce, 1.0f);
       return;
     }
 
-    //If no keyboard, then run the joystick checks
+    // If no keyboard, then mobile input
+    var currentTouches = Input.touches.Where(t => t.phase == TouchPhase.Began || t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary);
+
+    if (currentTouches.Count() > 0)
+    {
+      foreach (var touch in currentTouches)
+      {
+        var screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+
+        var angle = Vector2.SignedAngle(from: Vector2.zero - screenCenter, to: touch.position - screenCenter);
+
+        Cmd_SetPlayerDrivenMovement(Mathf.Abs(angle + 180), 1.0f);
+        return;
+      }
+    }
+
+    //If no keyboard or mobile, then run the joystick checks
     float x = Input.GetAxis(HorizontalJoystickAxisName);
     float y = Input.GetAxis(VerticalJoystickAxisName);
     var unit = new Vector2(x, y);
