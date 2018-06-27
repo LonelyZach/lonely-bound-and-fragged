@@ -3,7 +3,7 @@ using System.Collections;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Rigidbody2D), typeof(EdgeCollider2D), typeof(LineRenderer))]
-public class RoundedRectangleEdgeCollider2D : MonoBehaviour
+public class SuperEllipseEdgeCollider2D : MonoBehaviour
 {
   public float SuperellipseFactor = 4.0f;
   public float Width = 0f;
