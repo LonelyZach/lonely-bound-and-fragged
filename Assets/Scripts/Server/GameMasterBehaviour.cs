@@ -159,11 +159,16 @@ public class GameMasterBehaviour : NetworkBehaviour
   {
     GameObject scoreboard = (GameObject)Instantiate(Scoreboard);
     var scoreboardBehaviour = scoreboard.GetComponent<ScoreboardBehaviour>();
+
+    NetworkServer.Spawn(scoreboard);
+
     var playersByRank = _networkPlayers.OrderBy(o => o.playerData.rank).ToList();
+
     foreach (var player in playersByRank)
     {
-      scoreboardBehaviour.AddPlayer(player);
+      scoreboardBehaviour.AddPlayer(player.playerData);
     }
+
   }
 
   /// <summary>
