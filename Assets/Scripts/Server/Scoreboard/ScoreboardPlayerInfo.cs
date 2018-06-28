@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class ScoreboardPlayerInfo : MonoBehaviour
+public class ScoreboardPlayerInfo : NetworkBehaviour
 {
   public Text playerName;
   public Text gamesPlayed;
@@ -10,6 +11,7 @@ public class ScoreboardPlayerInfo : MonoBehaviour
   public Text wins;
   public Text rank;
 
+  [SyncVar]
   public PersistentPlayerData playerData;
 
   // Use this for initialization
@@ -26,5 +28,11 @@ public class ScoreboardPlayerInfo : MonoBehaviour
     killsScored.text = playerData.kills.ToString();
     wins.text = playerData.wins.ToString();
     rank.text = playerData.rank == 0 ? "" : playerData.rank.ToString();
+  }
+
+  [ClientRpc]
+  public void RpcSetParent(GameObject childScoreboardPlayer, GameObject parentScoreboard)
+  {
+    childScoreboardPlayer.transform.SetParent(parentScoreboard.transform);
   }
 }

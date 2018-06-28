@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class ScoreboardBehaviour : MonoBehaviour
+public class ScoreboardBehaviour : NetworkBehaviour
 {
   public GameObject DefaultScoreboardPlayerInfo;
   public RectTransform playerListContentTransform;
 
   protected VerticalLayoutGroup _layout;
-  protected List<NetworkPlayerBehaviour> _players = new List<NetworkPlayerBehaviour>();
   protected List<ScoreboardPlayerInfo> _playerInfos = new List<ScoreboardPlayerInfo>();
 
   public void OnEnable()
@@ -32,24 +32,28 @@ public class ScoreboardBehaviour : MonoBehaviour
     }
   }
 
-  public void AddPlayer(NetworkPlayerBehaviour player)
+  /// <summary>
+  /// This is the server call, it immediately passes data to an RPC
+  /// </summary>
+  /// <param name="playerData"></param>
+  public void AddPlayer(PersistentPlayerData playerData)
   {
-    if (_players.Contains(player))
-      return;
-
-    _players.Add(player);
-
-    var scoreboardPlayer = Instantiate(DefaultScoreboardPlayerInfo);
-    var scoreboardPlayerBehaviour = scoreboardPlayer.GetComponent<ScoreboardPlayerInfo>();
-
-    scoreboardPlayerBehaviour.playerData = player.playerData;
-    _playerInfos.Add(scoreboardPlayerBehaviour);
-
-    scoreboardPlayerBehaviour.transform.SetParent(playerListContentTransform, false);
-    PlayerListModified();
+    RpcAddPlayer(playerData);
   }
 
   public void PlayerListModified()
   {
+  }
+
+  [ClientRpc]
+  public void RpcAddPlayer(PersistentPlayerData playerData)
+  {
+    var scoreboardPlayer = Instantiate(DefaultScoreboardPlayerInfo);
+    var scoreboardPlayerBehaviour = scoreboardPlayer.GetComponent<ScoreboardPlayerInfo>();
+
+    scoreboardPlayerBehaviour.playerData = playerData;
+    _playerInfos.Add(scoreboardPlayerBehaviour);
+
+    scoreboardPlayerBehaviour.transform.SetParent(playerListContentTransform, false);
   }
 }
