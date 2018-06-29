@@ -8,10 +8,7 @@ public class PowerupSpawnerBehaviour : NetworkBehaviour
 
   public float PowerupSpawnInterval = 5.0f;
 
-  public GameObject PowerupPrefab;
-
-  public Sprite[] Sprites;
-  public GameObject[] ActivePowerupPrefabs;
+  public GameObject[] PowerupPrefabs;
 
   public float _timeToNextPowerupSpawn;
 
@@ -41,12 +38,9 @@ public class PowerupSpawnerBehaviour : NetworkBehaviour
     Vector2 location = new Vector2(x, y);
 
     
-    var i = _random.Next(0, ActivePowerupPrefabs.Length);
-    var powerup = Instantiate(PowerupPrefab).GetComponent<PowerupBehaviour>();
+    var i = _random.Next(0, PowerupPrefabs.Length);
+    var powerup = Instantiate(PowerupPrefabs[i]).GetComponent<PowerupBehaviour>();
     powerup.transform.position = location;
-    powerup.ActivePowerupPrefab = ActivePowerupPrefabs[i];
-
-    powerup.GetComponent<SpriteRenderer>().sprite = Sprites[i];
 
     NetworkServer.Spawn(powerup.gameObject);
   }

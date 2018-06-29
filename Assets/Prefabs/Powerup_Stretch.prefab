@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114391908029792572}
   - component: {fileID: 61719968205889202}
   m_Layer: 0
-  m_Name: Powerup
+  m_Name: Powerup_Stretch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,22 +104,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 78
-    i1: 94
-    i2: 112
-    i3: 218
-    i4: 76
-    i5: 97
-    i6: 186
-    i7: 36
-    i8: 41
-    i9: 200
-    i10: 165
-    i11: 251
-    i12: 134
-    i13: 61
-    i14: 21
-    i15: 200
+    i0: 163
+    i1: 137
+    i2: 122
+    i3: 137
+    i4: 164
+    i5: 153
+    i6: 119
+    i7: 20
+    i8: 122
+    i9: 54
+    i10: 97
+    i11: 135
+    i12: 142
+    i13: 156
+    i14: 84
+    i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114391908029792572
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ada361772b5bd9149b6ffa3dc6dbe142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivePowerupPrefab: {fileID: 1050911294067882, guid: 60faab472da3ca649a971bd7200e5a7a,
+  ActivePowerupPrefab: {fileID: 1050911294067882, guid: 78bd48960ab37ad438622cbd8b20698a,
     type: 2}
 --- !u!212 &212713210450078778
 SpriteRenderer:
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 676a74bea3b31694db862173b8d3d911, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76d1ec830b37e774a99128c53eee8a3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
