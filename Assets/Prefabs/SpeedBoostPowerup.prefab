@@ -113,11 +113,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e58bca64414351040a96f150f49a57aa, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9a7b0bd0191ffd14bb4895d3cf7545b1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -274,7 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf1fb523fe3bf04f9aed9ed53cf5a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatingAvatarColor: {r: 0, g: 0, b: 0, a: 0}
+  TimeToLive: 10
+  ActivatingAvatarId: 0
   MovementParticles: {fileID: 1770235647437614}
 --- !u!114 &114692862284240704
 MonoBehaviour:
